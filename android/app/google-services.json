@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "14529293540",
+    "project_id": "interiordecor-94d01",
+    "storage_bucket": "interiordecor-94d01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14529293540:android:29a355c8f5462c44f890f1",
+        "android_client_info": {
+          "package_name": "com.interiordecor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14529293540-5bc8gll2sf4tjgqv8jqgo5asivtgvli8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.interiordecor",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "14529293540-uhgso9taeeehs1o1f7pggn9e4m3ptpn7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbypqd5zJQMazIa1BY8eVo51u0SlEJPas"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14529293540-uhgso9taeeehs1o1f7pggn9e4m3ptpn7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
