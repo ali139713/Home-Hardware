@@ -20,6 +20,8 @@ import VectorIcon from 'react-native-vector-icons/FontAwesome';
 import {HEIGHT, WIDTH} from './../helpers/helperFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SocialLoginButton} from '../components/SocialLoginButton';
+import {StackActions} from '@react-navigation/native';
+import {Screens} from './../helpers/ScreenConstant';
 
 const LoginScreen: React.FC<any> = ({navigation}) => {
   const [show, setShow] = useState<boolean>(false);
@@ -44,6 +46,10 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
         style={{marginLeft: WIDTH(5)}}
       />
     );
+  };
+
+  const handleLogin = () => {
+    navigation.dispatch(StackActions.replace(Screens.bottom));
   };
 
   return (
@@ -106,7 +112,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
               Forgot Password
             </Text>
             <HStack justifyContent="center">
-              <Button mt="2" bg={appColor.black} w={200}>
+              <Button mt="2" bg={appColor.black} w={200} onPress={handleLogin}>
                 Log in
               </Button>
             </HStack>
