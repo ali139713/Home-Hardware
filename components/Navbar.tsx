@@ -1,44 +1,49 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {HEIGHT, WIDTH} from '../helpers/helperFunction';
-import VectorIcon from 'react-native-vector-icons/FontAwesome';
+import {StyleSheet, Text, View} from 'react-native';
+import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import {appColor} from './../assets/colors';
+import {NavigationProp} from '@react-navigation/native';
+import IconComponent from './IconComponent';
 
-const Navbar: React.FC<any> = ({navigation}) => {
+type NavbarProps = {
+  isFavouriteIcon?: boolean;
+  headerText?: string;
+};
+
+const Navbar: React.FC<NavbarProps> = ({isFavouriteIcon, headerText}) => {
   return (
     <View style={styles.container}>
       <View style={styles.arrowIconContainer}>
-        <BackArrowIcon />
+        <IconComponent name="arrow-left" size={25} color={appColor.black} />
       </View>
 
       <View style={styles.filterAndSearchIconContainer}>
-        <FilterIcon />
-        <SearchIcon />
+        {headerText !== '' && (
+          <Text style={styles.headerTextStyle}>{headerText}</Text>
+        )}
+        {isFavouriteIcon && (
+          <IconComponent
+            name="heart"
+            size={25}
+            color={appColor.black}
+            style={{marginRight: WIDTH(15)}}
+          />
+        )}
+        {!isFavouriteIcon && (
+          <IconComponent
+            name="filter"
+            size={25}
+            color={appColor.black}
+            style={{marginRight: WIDTH(15)}}
+          />
+        )}
+        <IconComponent name="search" size={25} color={appColor.black} />
       </View>
     </View>
   );
 };
 
 export default Navbar;
-
-const BackArrowIcon = () => {
-  return <VectorIcon name="arrow-left" size={25} color={appColor.black} />;
-};
-
-const FilterIcon = () => {
-  return (
-    <VectorIcon
-      name="filter"
-      size={25}
-      color={appColor.black}
-      style={{marginRight: WIDTH(15)}}
-    />
-  );
-};
-
-const SearchIcon = () => {
-  return <VectorIcon name="search" size={25} color={appColor.black} />;
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,5 +59,11 @@ const styles = StyleSheet.create({
   filterAndSearchIconContainer: {
     flexDirection: 'row',
     marginRight: WIDTH(10),
+  },
+  headerTextStyle: {
+    fontSize: FONT(18),
+    fontWeight: '800',
+    marginRight: WIDTH(85),
+    color: appColor.black,
   },
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import {Screens} from '../helpers/ScreenConstant';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ProductDetailScreen from './../screens/ProductDetailScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeNavigation = () => {
@@ -16,6 +17,11 @@ const HomeNavigation = () => {
       <Stack.Screen
         name={Screens.Categories}
         component={CategoriesScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={Screens.ProductDetail}
+        component={ProductDetailScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

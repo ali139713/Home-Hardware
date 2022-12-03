@@ -11,6 +11,7 @@ export const Screens = {
   Profile: 'ProfileScreen',
   Bottom: 'BottomTab',
   Categories: 'CategoriesScreen',
+  ProductDetail: 'ProductDetailScreen',
 
   /// Navigation ///
 

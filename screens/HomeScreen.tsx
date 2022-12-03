@@ -15,7 +15,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
   ];
 
   const handleViewAllClick = () => {
-    navigation.navigate(Screens.Categories);
+    navigation.navigate(Screens.Categories, {isMainCategory: true});
   };
 
   return (

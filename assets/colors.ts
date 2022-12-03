@@ -4,4 +4,5 @@ export const appColor = {
   black: '#111',
   gray: 'gray',
   lightGray: 'lightgray',
+  red: 'red',
 };

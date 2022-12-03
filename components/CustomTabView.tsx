@@ -1,14 +1,22 @@
 import {Box, Center, Pressable, useColorModeValue} from 'native-base';
 import React, {useState} from 'react';
-import {Animated, Dimensions, StatusBar} from 'react-native';
+import {View, Animated, Dimensions, StyleSheet} from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {HEIGHT} from '../helpers/helperFunction';
 import {appColor} from './../assets/colors';
+import {WIDTH} from './../helpers/helperFunction';
+import HorizontalImageList from './HorizontalImageList';
+import VerticalImageList from './VerticalImageList';
+const images = [
+  require('../assets/onBoardingImage1.png'),
+  require('../assets/onBoardingImage2.png'),
+  require('../assets/onBoardingImage3.png'),
+];
 
 const FirstRoute = () => (
-  <Center flex={1} my="4">
-    This is Tab 1
-  </Center>
+  <View style={styles.listContainer}>
+    <VerticalImageList data={images} isCategories={false} />
+  </View>
 );
 
 const SecondRoute = () => (
@@ -123,3 +131,13 @@ export const CustomTabView = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  listContainer: {
+    height: '100%',
+    width: '95%',
+    marginTop: HEIGHT(20),
+    marginLeft: WIDTH(10),
+    // backgroundColor: 'red',
+  },
+});

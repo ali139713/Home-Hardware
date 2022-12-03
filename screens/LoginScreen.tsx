@@ -1,52 +1,26 @@
+import {StackActions} from '@react-navigation/native';
 import {
   Box,
   Button,
   Center,
-  FormControl,
   Heading,
   HStack,
-  Icon,
   Input,
-  Link,
-  Pressable,
   Stack,
   Text,
   VStack,
 } from 'native-base';
 import React, {useState} from 'react';
 import {Image} from 'react-native';
-import {appColor} from '../assets/colors';
-import VectorIcon from 'react-native-vector-icons/FontAwesome';
-import {HEIGHT, WIDTH} from './../helpers/helperFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {appColor} from '../assets/colors';
 import {SocialLoginButton} from '../components/SocialLoginButton';
-import {StackActions} from '@react-navigation/native';
+import IconComponent from './../components/IconComponent';
+import {HEIGHT, WIDTH} from './../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
 const LoginScreen: React.FC<any> = ({navigation}) => {
   const [show, setShow] = useState<boolean>(false);
-
-  const UserIcon = () => {
-    return (
-      <VectorIcon
-        name="user"
-        size={20}
-        color="gray"
-        style={{marginLeft: WIDTH(5)}}
-      />
-    );
-  };
-
-  const PasswordIcon = () => {
-    return (
-      <VectorIcon
-        name="lock"
-        size={20}
-        color="gray"
-        style={{marginLeft: WIDTH(5)}}
-      />
-    );
-  };
 
   const handleLogin = () => {
     navigation.dispatch(StackActions.replace(Screens.Bottom));
@@ -88,7 +62,14 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
-                InputLeftElement={<UserIcon />}
+                InputLeftElement={
+                  <IconComponent
+                    name="user"
+                    size={20}
+                    color={appColor.gray}
+                    style={{marginLeft: WIDTH(5)}}
+                  />
+                }
                 placeholder="Email"
               />
               <Input
@@ -97,7 +78,14 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   md: '25%',
                 }}
                 type={show ? 'text' : 'password'}
-                InputLeftElement={<PasswordIcon />}
+                InputLeftElement={
+                  <IconComponent
+                    name="lock"
+                    size={20}
+                    color={appColor.gray}
+                    style={{marginLeft: WIDTH(5)}}
+                  />
+                }
                 placeholder="Password"
               />
             </Stack>
