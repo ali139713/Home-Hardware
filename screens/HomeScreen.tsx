@@ -1,6 +1,6 @@
 import {Text, View} from 'native-base';
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {Image, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
@@ -24,13 +24,22 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             <Text style={styles.subHeading}>Categories</Text>
             <Text style={styles.subHeading}>View All</Text>
           </View>
-          <View style={styles.categoryListContainer}></View>
+          <View style={styles.categoryListContainer}>
+            <HorizontalImageList data={images} />
+          </View>
           <View style={styles.bestSellingTextContainer}>
             <Text style={styles.subHeading}>Best Selling</Text>
             <Text style={styles.subHeading}>View All</Text>
           </View>
-          <View style={styles.bestSellingListContainer}></View>
-          <View style={styles.adContainer}></View>
+          <View style={styles.bestSellingListContainer}>
+            <HorizontalImageList data={images} />
+          </View>
+          <View style={styles.adContainer}>
+            <Image
+              style={{height: '100%', width: '100%'}}
+              source={require('../assets/splashScreen.png')}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
