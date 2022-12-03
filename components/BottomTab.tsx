@@ -6,10 +6,11 @@ import VectorIcon from 'react-native-vector-icons/FontAwesome';
 import {appColor} from '../assets/colors';
 import {HEIGHT} from '../helpers/helperFunction';
 import {Screens} from '../helpers/ScreenConstant';
-import CartScreen from '../screens/CartScreen';
+import CartScreen from '../screens/CartDetailScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeNavigation from './../navigation/HomeNavigation';
 import FavouriteScreen from './../screens/FavouritesScreen';
+import CartNavigation from './../navigation/CartNavigation';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -77,8 +78,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name={Screens.Cart}
-        component={CartScreen}
+        name={Screens.CartNavigation}
+        component={CartNavigation}
         options={{
           headerShown: false,
           tabBarIcon: tabInfo => {

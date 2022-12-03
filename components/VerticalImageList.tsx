@@ -9,14 +9,9 @@ import {
 } from 'react-native';
 import {appColor} from '../assets/colors';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
-import VectorIcon from 'react-native-vector-icons/FontAwesome';
 import IconComponent from './IconComponent';
 
 const {width} = Dimensions.get('window');
-
-const SPACING = 5;
-const ITEM_LENGTH = width * 0.2; // Item is a square. Therefore, its height and width are of the same length.
-const BORDER_RADIUS = 20;
 
 type VerticalImageListPros = {
   data: any;
@@ -70,7 +65,6 @@ export default VerticalImageList;
 const styles = StyleSheet.create({
   itemContent: {
     position: 'relative',
-    // marginHorizontal: SPACING,
     marginVertical: HEIGHT(15),
     alignItems: 'flex-start',
   },

@@ -16,15 +16,18 @@ import Navbar from '../components/Navbar';
 import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import ColorAvatars from './../components/ColorAvatars';
+import {Screens} from './../helpers/ScreenConstant';
 
-const ProductDetailScreen = () => {
+const ProductDetailScreen = ({navigation}: any) => {
   const images = [
     require('../assets/onBoardingImage1.png'),
     require('../assets/onBoardingImage2.png'),
     require('../assets/onBoardingImage3.png'),
   ];
 
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    navigation.navigate(Screens.CartNavigation);
+  };
 
   return (
     <SafeAreaView>

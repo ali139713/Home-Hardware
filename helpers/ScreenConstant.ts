@@ -7,13 +7,16 @@ export const Screens = {
   Signup: 'SignupScreen',
   Home: 'HomeScreen',
   Favourites: 'FavouritesScreen',
-  Cart: 'CartScreen',
   Profile: 'ProfileScreen',
   Bottom: 'BottomTab',
   Categories: 'CategoriesScreen',
   ProductDetail: 'ProductDetailScreen',
+  CartDetail: 'CartDetailScreen',
+  ShipmentDetail: 'ShipmentDetailScreen',
+  DeliveryDetail: 'DeliveryDetailScreen',
 
   /// Navigation ///
 
   HomeNavigation: 'HomeNavigation',
+  CartNavigation: 'CartNavigation',
 };
