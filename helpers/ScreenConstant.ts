@@ -1,4 +1,6 @@
 export const Screens = {
+  /// Screens ///
+
   Splash: 'SplashScreen',
   OnBoarding: 'OnboardingScreen',
   Login: 'LoginScreen',
@@ -7,5 +9,10 @@ export const Screens = {
   Favourites: 'FavouritesScreen',
   Cart: 'CartScreen',
   Profile: 'ProfileScreen',
-  bottom: 'BottomTab',
+  Bottom: 'BottomTab',
+  Categories: 'CategoriesScreen',
+
+  /// Navigation ///
+
+  HomeNavigation: 'HomeNavigation',
 };

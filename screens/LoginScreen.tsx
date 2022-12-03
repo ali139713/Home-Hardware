@@ -49,7 +49,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
   };
 
   const handleLogin = () => {
-    navigation.dispatch(StackActions.replace(Screens.bottom));
+    navigation.dispatch(StackActions.replace(Screens.Bottom));
   };
 
   return (

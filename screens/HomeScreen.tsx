@@ -5,6 +5,7 @@ import {appColor} from '../assets/colors';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import HorizontalImageList from './../components/HorizontalImageList';
+import {Screens} from './../helpers/ScreenConstant';
 
 const HomeScreen: React.FC<any> = ({navigation}) => {
   const images = [
@@ -12,6 +13,11 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
     require('../assets/onBoardingImage2.png'),
     require('../assets/onBoardingImage3.png'),
   ];
+
+  const handleViewAllClick = () => {
+    navigation.navigate(Screens.Categories);
+  };
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -22,14 +28,18 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
           </View>
           <View style={styles.categoryTextContainer}>
             <Text style={styles.subHeading}>Categories</Text>
-            <Text style={styles.subHeading}>View All</Text>
+            <Text style={styles.subHeading} onPress={handleViewAllClick}>
+              View All
+            </Text>
           </View>
           <View style={styles.categoryListContainer}>
             <HorizontalImageList data={images} />
           </View>
           <View style={styles.bestSellingTextContainer}>
             <Text style={styles.subHeading}>Best Selling</Text>
-            <Text style={styles.subHeading}>View All</Text>
+            <Text style={styles.subHeading} onPress={handleViewAllClick}>
+              View All
+            </Text>
           </View>
           <View style={styles.bestSellingListContainer}>
             <HorizontalImageList data={images} />

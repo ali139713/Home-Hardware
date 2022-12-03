@@ -6,6 +6,7 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import BottomTabs from './../components/BottomTab';
+import HomeNavigation from './HomeNavigation';
 
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
@@ -33,8 +34,13 @@ const MainNavigation = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name={Screens.bottom}
+        name={Screens.Bottom}
         component={BottomTabs}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={Screens.HomeNavigation}
+        component={HomeNavigation}
       />
     </Stack.Navigator>
   );

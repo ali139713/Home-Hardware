@@ -1,21 +1,21 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Text, View} from 'native-base';
+import {View} from 'native-base';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {appColor} from '../assets/colors';
-import {HEIGHT, WIDTH} from '../helpers/helperFunction';
-import {Screens} from '../helpers/ScreenConstant';
-import HomeScreen from '../screens/HomeScreen';
+import {StyleSheet} from 'react-native';
 import VectorIcon from 'react-native-vector-icons/FontAwesome';
-import FavouriteScreen from './../screens/FavouritesScreen';
+import {appColor} from '../assets/colors';
+import {HEIGHT} from '../helpers/helperFunction';
+import {Screens} from '../helpers/ScreenConstant';
 import CartScreen from '../screens/CartScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import HomeNavigation from './../navigation/HomeNavigation';
+import FavouriteScreen from './../screens/FavouritesScreen';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName={Screens.Home}
+      initialRouteName={Screens.HomeNavigation}
       screenOptions={{
         tabBarStyle: {
           height: HEIGHT(80),
@@ -25,8 +25,8 @@ const Tabs = () => {
         tabBarHideOnKeyboard: true,
       }}>
       <Tab.Screen
-        name={Screens.Home}
-        component={HomeScreen}
+        name={Screens.HomeNavigation}
+        component={HomeNavigation}
         options={{
           headerShown: false,
           tabBarIcon: tabInfo => {
