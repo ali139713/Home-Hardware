@@ -64,7 +64,7 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
           <HStack justifyContent="center">
             <Button
               mt="10"
-              mb="20"
+              mb="10"
               bg={appColor.black}
               w="90%"
               onPress={handleCheckout}>
