@@ -4,12 +4,28 @@ import {Text} from 'react-native';
 import {appColor} from '../assets/colors';
 import IconComponent from './IconComponent';
 
-const Counter = () => {
+type CounterProps = {
+  flexDirection?: any;
+  iconSize?: number;
+};
+
+const Counter = ({flexDirection, iconSize}: CounterProps) => {
   return (
-    <HStack justifyContent="space-between" space={3}>
-      <IconComponent name="plus" size={25} color={appColor.black} />
+    <HStack
+      flexDirection={flexDirection ? flexDirection : 'row'}
+      justifyContent="space-between"
+      space={3}>
+      <IconComponent
+        name="plus"
+        size={iconSize ? iconSize : 25}
+        color={appColor.black}
+      />
       <Text>01</Text>
-      <IconComponent name="minus" size={25} color={appColor.black} />
+      <IconComponent
+        name="minus"
+        size={iconSize ? iconSize : 25}
+        color={appColor.black}
+      />
     </HStack>
   );
 };

@@ -8,6 +8,19 @@ import Navbar from './../components/Navbar';
 import ProductList from './../components/ProductsList';
 
 const CartDetailScreen: React.FC<any> = ({navigation}) => {
+  const data = [
+    {
+      id: 1,
+      name: 'Arm Chair Set',
+      price: '$5000',
+    },
+    {
+      id: 2,
+      name: 'Sofa Set',
+      price: '$2000',
+    },
+  ];
+
   const handleCheckout = () => {};
 
   return (
@@ -17,7 +30,7 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
           <Navbar />
           <Text style={styles.heading}>Cart Details</Text>
           <View style={styles.productListContainer}>
-            {/* <ProductList /> */}
+            <ProductList data={data} />
           </View>
           <View style={styles.checkoutDetailsContainer}>
             <VStack
@@ -51,6 +64,7 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
           <HStack justifyContent="center">
             <Button
               mt="10"
+              mb="20"
               bg={appColor.black}
               w="90%"
               onPress={handleCheckout}>
@@ -76,7 +90,7 @@ const styles = StyleSheet.create({
     width: '95%',
     marginTop: HEIGHT(20),
     marginLeft: WIDTH(10),
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     padding: 20,
     elevation: 10,
     shadowColor: 'rgba(0.8,0.8,0.8,0.8)',
