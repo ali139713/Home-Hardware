@@ -6,6 +6,7 @@ import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import Navbar from './../components/Navbar';
 import ProductList from './../components/ProductsList';
+import {Screens} from './../helpers/ScreenConstant';
 
 const CartDetailScreen: React.FC<any> = ({navigation}) => {
   const data = [
@@ -26,7 +27,9 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
     },
   ];
 
-  const handleCheckout = () => {};
+  const handleCheckout = () => {
+    navigation.navigate(Screens.ShipmentDetail);
+  };
 
   return (
     <SafeAreaView>
