@@ -20,6 +20,7 @@ const ProductList: React.FC<ProductListProps> = ({data}) => {
     <View>
       <FlatList
         data={data}
+        nestedScrollEnabled
         renderItem={({item, index}) => {
           return (
             <View style={styles.container}>

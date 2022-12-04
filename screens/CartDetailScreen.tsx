@@ -19,6 +19,11 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
       name: 'Sofa Set',
       price: '$2000',
     },
+    {
+      id: 3,
+      name: 'Arm Chair Set',
+      price: '$5000',
+    },
   ];
 
   const handleCheckout = () => {};
@@ -130,9 +135,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   heading: {
-    fontSize: FONT(20),
+    fontSize: FONT(22),
     fontWeight: '800',
-    marginTop: HEIGHT(10),
+    marginTop: HEIGHT(30),
     marginLeft: WIDTH(10),
     color: appColor.black,
   },
