@@ -6,9 +6,12 @@ import Navbar from '../components/Navbar';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import IconComponent from './../components/IconComponent';
+import {Screens} from './../helpers/ScreenConstant';
 
 const ShipmentDetailScreen: React.FC<any> = ({navigation}) => {
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    navigation.navigate(Screens.DeliveryDetail);
+  };
 
   return (
     <SafeAreaView>

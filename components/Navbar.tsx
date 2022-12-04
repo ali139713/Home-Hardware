@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   headerTextStyle: {
     fontSize: FONT(18),
     fontWeight: '800',
-    marginRight: WIDTH(85),
+    marginRight: WIDTH(50),
     color: appColor.black,
   },
 });
