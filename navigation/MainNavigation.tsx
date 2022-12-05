@@ -7,6 +7,8 @@ import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import BottomTabs from './../components/BottomTab';
 import HomeNavigation from './HomeNavigation';
+import CartNavigation from './CartNavigation';
+import ProfileNavigation from './ProfileNavigation';
 
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
@@ -41,6 +43,16 @@ const MainNavigation = () => {
         options={{headerShown: false}}
         name={Screens.HomeNavigation}
         component={HomeNavigation}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={Screens.CartNavigation}
+        component={CartNavigation}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={Screens.ProfileNavigation}
+        component={ProfileNavigation}
       />
     </Stack.Navigator>
   );

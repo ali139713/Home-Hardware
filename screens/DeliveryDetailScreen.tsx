@@ -15,7 +15,9 @@ import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {appColor} from '../assets/colors';
 import IconComponent from '../components/IconComponent';
 import {height, width} from '../helpers/Constant';
+import {WIDTH} from '../helpers/helperFunction';
 import Navbar from './../components/Navbar';
+import {Screens} from './../helpers/ScreenConstant';
 
 const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
   type SelectType = {
@@ -74,13 +76,19 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
   const [province, setProvince] = useState<string>('');
   const [isDefaultAddress, setIsDefaultAddress] = useState<boolean>(false);
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    navigation.navigate(Screens.OrderCompletion);
+  };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar headerText="Enter Delivery Address" />
+          <Navbar
+            headerText="Enter Delivery Address"
+            isHideIcons
+            rightMargin={WIDTH(90)}
+          />
           <Stack
             space={2.5}
             alignSelf="center"
@@ -208,7 +216,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
               </Box>
 
               <Box w="30%" ml={12} mt={0}>
-                <Text bold fontSize="xl" mb={3.5}>
+                <Text bold fontSize="xl" mb={4}>
                   Zip Code
                 </Text>
                 <FormControl mb="5">

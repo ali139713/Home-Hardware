@@ -1,3 +1,4 @@
+import {StackActions} from '@react-navigation/native';
 import {Button, Divider, HStack} from 'native-base';
 import React from 'react';
 import {
@@ -26,7 +27,7 @@ const ProductDetailScreen = ({navigation}: any) => {
   ];
 
   const handleAddToCart = () => {
-    navigation.navigate(Screens.CartNavigation);
+    navigation.dispatch(StackActions.replace(Screens.CartNavigation));
   };
 
   return (

@@ -11,6 +11,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import HomeNavigation from './../navigation/HomeNavigation';
 import FavouriteScreen from './../screens/FavouritesScreen';
 import CartNavigation from './../navigation/CartNavigation';
+import ProfileNavigation from '../navigation/ProfileNavigation';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -108,8 +109,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name={Screens.Profile}
-        component={ProfileScreen}
+        name={Screens.ProfileNavigation}
+        component={ProfileNavigation}
         options={{
           headerShown: false,
           tabBarIcon: tabInfo => {

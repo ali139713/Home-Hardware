@@ -8,9 +8,16 @@ import IconComponent from './IconComponent';
 type NavbarProps = {
   isFavouriteIcon?: boolean;
   headerText?: string;
+  isHideIcons?: boolean;
+  rightMargin?: number;
 };
 
-const Navbar: React.FC<NavbarProps> = ({isFavouriteIcon, headerText}) => {
+const Navbar: React.FC<NavbarProps> = ({
+  isFavouriteIcon,
+  headerText,
+  isHideIcons,
+  rightMargin,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.arrowIconContainer}>
@@ -19,9 +26,17 @@ const Navbar: React.FC<NavbarProps> = ({isFavouriteIcon, headerText}) => {
 
       <View style={styles.filterAndSearchIconContainer}>
         {headerText !== '' && (
-          <Text style={styles.headerTextStyle}>{headerText}</Text>
+          <Text
+            style={{
+              fontSize: FONT(18),
+              fontWeight: '800',
+              marginRight: isHideIcons ? rightMargin : WIDTH(50),
+              color: appColor.black,
+            }}>
+            {headerText}
+          </Text>
         )}
-        {isFavouriteIcon && (
+        {isFavouriteIcon && !isHideIcons && (
           <IconComponent
             name="heart"
             size={25}
@@ -29,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({isFavouriteIcon, headerText}) => {
             style={{marginRight: WIDTH(15)}}
           />
         )}
-        {!isFavouriteIcon && (
+        {!isFavouriteIcon && !isHideIcons && (
           <IconComponent
             name="filter"
             size={25}
@@ -37,7 +52,9 @@ const Navbar: React.FC<NavbarProps> = ({isFavouriteIcon, headerText}) => {
             style={{marginRight: WIDTH(15)}}
           />
         )}
-        <IconComponent name="search" size={25} color={appColor.black} />
+        {!isHideIcons && (
+          <IconComponent name="search" size={25} color={appColor.black} />
+        )}
       </View>
     </View>
   );
@@ -59,11 +76,5 @@ const styles = StyleSheet.create({
   filterAndSearchIconContainer: {
     flexDirection: 'row',
     marginRight: WIDTH(10),
-  },
-  headerTextStyle: {
-    fontSize: FONT(18),
-    fontWeight: '800',
-    marginRight: WIDTH(50),
-    color: appColor.black,
   },
 });

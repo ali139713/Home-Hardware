@@ -14,9 +14,12 @@ export const Screens = {
   CartDetail: 'CartDetailScreen',
   ShipmentDetail: 'ShipmentDetailScreen',
   DeliveryDetail: 'DeliveryDetailScreen',
+  OrderCompletion: 'OrderCompletionScreen',
+  MyPurchases: 'MyPurchasesScreen',
 
   /// Navigation ///
 
   HomeNavigation: 'HomeNavigation',
   CartNavigation: 'CartNavigation',
+  ProfileNavigation: 'ProfileNavigation',
 };

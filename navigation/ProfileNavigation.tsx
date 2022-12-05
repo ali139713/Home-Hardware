@@ -5,32 +5,24 @@ import CartDetailScreen from '../screens/CartDetailScreen';
 import DeliveryDetailScreen from './../screens/DeliveryDetailScreen';
 import ShipmentDetailScreen from './../screens/ShipmentDetailScreen';
 import OrderCompletionScreen from './../screens/OrderCompletionScreen';
+import MyPurchasesScreen from '../screens/MyPurchasesScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
-const CartNavigation = () => {
+const ProfileNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName={Screens.CartDetail}>
+    <Stack.Navigator initialRouteName={Screens.MyPurchases}>
       <Stack.Screen
-        name={Screens.CartDetail}
-        component={CartDetailScreen}
+        name={Screens.MyPurchases}
+        component={MyPurchasesScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name={Screens.ShipmentDetail}
-        component={ShipmentDetailScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={Screens.DeliveryDetail}
-        component={DeliveryDetailScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={Screens.OrderCompletion}
-        component={OrderCompletionScreen}
+        name={Screens.Profile}
+        component={ProfileScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 };
-export default CartNavigation;
+export default ProfileNavigation;
