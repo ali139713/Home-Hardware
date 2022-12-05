@@ -4,13 +4,27 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import Navbar from '../components/Navbar';
 import {width} from '../helpers/Constant';
-import {WIDTH} from '../helpers/helperFunction';
+import {HEIGHT, WIDTH} from '../helpers/helperFunction';
+import PurchaseList from './../components/PurchaseList';
 
 const MyPurchasesScreen: React.FC<any> = ({navigation}) => {
-  const images = [
-    require('../assets/onBoardingImage1.png'),
-    require('../assets/onBoardingImage2.png'),
-    require('../assets/onBoardingImage3.png'),
+  const myPurchases = [
+    {
+      id: 1,
+      name: 'Sofa Set',
+      use: 'Best for Lounge & Drawing',
+      room: 'Room Area',
+      color: 'Black',
+      brand: 'JB Saeed',
+    },
+    {
+      id: 2,
+      name: 'Chair',
+      use: 'Best for Room and Lawn',
+      room: 'Lawn Area',
+      color: 'Brown',
+      brand: 'JB Saeed',
+    },
   ];
 
   return (
@@ -22,7 +36,9 @@ const MyPurchasesScreen: React.FC<any> = ({navigation}) => {
           rightMargin={WIDTH(120)}
         />
 
-        <View style={styles.myPurchasesListContainer}></View>
+        <View style={styles.myPurchasesListContainer}>
+          <PurchaseList data={myPurchases} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -38,8 +54,10 @@ const styles = StyleSheet.create({
   },
 
   myPurchasesListContainer: {
-    width: '95%',
-    height: '80%',
-    backgroundColor: appColor.red,
+    width: '90%',
+    height: '90%',
+    marginTop: HEIGHT(10),
+    marginHorizontal: WIDTH(20),
+    backgroundColor: appColor.white,
   },
 });
