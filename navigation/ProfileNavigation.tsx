@@ -11,15 +11,15 @@ import ProfileScreen from '../screens/ProfileScreen';
 const Stack = createNativeStackNavigator();
 const ProfileNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName={Screens.MyPurchases}>
-      <Stack.Screen
-        name={Screens.MyPurchases}
-        component={MyPurchasesScreen}
-        options={{headerShown: false}}
-      />
+    <Stack.Navigator initialRouteName={Screens.Profile}>
       <Stack.Screen
         name={Screens.Profile}
         component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={Screens.MyPurchases}
+        component={MyPurchasesScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
