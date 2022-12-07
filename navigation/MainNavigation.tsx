@@ -9,6 +9,7 @@ import BottomTabs from './../components/BottomTab';
 import HomeNavigation from './HomeNavigation';
 import CartNavigation from './CartNavigation';
 import ProfileNavigation from './ProfileNavigation';
+import {FilterScreen} from '../screens/FilterScreen';
 
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
@@ -53,6 +54,11 @@ const MainNavigation = () => {
         options={{headerShown: false}}
         name={Screens.ProfileNavigation}
         component={ProfileNavigation}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={Screens.Filter}
+        component={FilterScreen}
       />
     </Stack.Navigator>
   );

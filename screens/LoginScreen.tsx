@@ -26,6 +26,10 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
     navigation.dispatch(StackActions.replace(Screens.Bottom));
   };
 
+  const handleNavigateToSignUp = () => {
+    navigation.navigate(Screens.Signup);
+  };
+
   return (
     <KeyboardAwareScrollView>
       <Center w="100%" backgroundColor={appColor.white}>
@@ -140,7 +144,8 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
             marginTop={HEIGHT(20)}
             _dark={{
               color: appColor.black,
-            }}>
+            }}
+            onPress={handleNavigateToSignUp}>
             Don't have an account? Sign Up
           </Text>
         </Box>

@@ -16,6 +16,7 @@ export const Screens = {
   DeliveryDetail: 'DeliveryDetailScreen',
   OrderCompletion: 'OrderCompletionScreen',
   MyPurchases: 'MyPurchasesScreen',
+  Filter: 'FilterScreen',
 
   /// Navigation ///
 
