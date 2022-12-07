@@ -243,6 +243,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                 mt="10"
                 mb="10"
                 bg={appColor.black}
+                backgroundColor={appColor.black}
                 w="90%"
                 onPress={handleSave}>
                 Save & Continue

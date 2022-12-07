@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
             style={{
               fontSize: FONT(18),
               fontWeight: '800',
-              marginRight: isHideIcons ? rightMargin : WIDTH(50),
+              marginRight: isHideIcons ? rightMargin : WIDTH(80),
               color: appColor.black,
             }}>
             {headerText}

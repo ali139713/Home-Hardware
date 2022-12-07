@@ -17,11 +17,16 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
 import IconComponent from '../components/IconComponent';
 import {WIDTH} from '../helpers/helperFunction';
+import {Screens} from './../helpers/ScreenConstant';
 
 const SignupScreen: React.FC<any> = ({navigation}) => {
   const [show, setShow] = useState<boolean>(false);
 
   const handleSignUp = () => {};
+
+  const handleNavigateToLogin = () => {
+    navigation.navigate(Screens.Login);
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -102,7 +107,12 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
               />
             </Stack>
             <HStack justifyContent="center">
-              <Button mt="2" bg={appColor.black} w={200} onPress={handleSignUp}>
+              <Button
+                mt="2"
+                bg={appColor.black}
+                backgroundColor={appColor.black}
+                w={200}
+                onPress={handleSignUp}>
                 Create Account
               </Button>
             </HStack>
@@ -113,7 +123,8 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
                 fontWeight={'medium'}
                 _dark={{
                   color: 'warmGray.200',
-                }}>
+                }}
+                onPress={handleNavigateToLogin}>
                 Already have an account? Login here
               </Text>
             </HStack>

@@ -7,11 +7,12 @@ import {appColor} from '../assets/colors';
 
 type OptionTabProps = {
   name: string;
+  onClick: (optionName: string) => void;
 };
 
-const OptionTab = ({name}: OptionTabProps) => {
+const OptionTab = ({name, onClick}: OptionTabProps) => {
   return (
-    <VStack w="100%">
+    <VStack w="100%" onTouchStart={() => onClick(name)}>
       <HStack justifyContent="space-between" marginX={5}>
         <Text style={styles.blackText}>{name}</Text>
         <IconComponent name="arrow-right" size={20} color={appColor.black} />

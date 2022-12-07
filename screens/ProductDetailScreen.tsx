@@ -27,7 +27,7 @@ const ProductDetailScreen = ({navigation}: any) => {
   ];
 
   const handleAddToCart = () => {
-    navigation.dispatch(StackActions.replace(Screens.CartNavigation));
+    navigation.navigate(Screens.CartNavigation);
   };
 
   return (
@@ -81,6 +81,7 @@ const ProductDetailScreen = ({navigation}: any) => {
             <Button
               mt="10"
               bg={appColor.black}
+              backgroundColor={appColor.black}
               w="90%"
               onPress={handleAddToCart}>
               Add To Cart

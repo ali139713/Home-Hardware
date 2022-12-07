@@ -5,9 +5,20 @@ import {appColor} from '../assets/colors';
 import OptionTab from '../components/OptionTab';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
+import {StackActions} from '@react-navigation/native';
+import {Screens} from './../helpers/ScreenConstant';
 
 const ProfileScreen: React.FC<any> = ({navigation}) => {
   const handleEditProfile = () => {};
+
+  const handleOptionPress = (optionName: string) => {
+    switch (optionName) {
+      case 'Logout':
+        navigation.navigate(Screens.Login);
+      default:
+        return;
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -25,28 +36,32 @@ const ProfileScreen: React.FC<any> = ({navigation}) => {
               mt="10"
               mb="10"
               bg={appColor.black}
+              backgroundColor={appColor.black}
               w="40%"
               onPress={handleEditProfile}>
               Edit Profile
             </Button>
           </HStack>
           <HStack w="100%">
-            <OptionTab name="My Orders" />
+            <OptionTab name="My Orders" onClick={handleOptionPress} />
           </HStack>
           <HStack w="100%">
-            <OptionTab name="Favourites" />
+            <OptionTab name="Favourites" onClick={handleOptionPress} />
           </HStack>
           <HStack w="100%">
-            <OptionTab name="Shipping Address" />
+            <OptionTab name="Shipping Address" onClick={handleOptionPress} />
           </HStack>
           <HStack w="100%">
-            <OptionTab name="Gift Cards & Vouchers" />
+            <OptionTab
+              name="Gift Cards & Vouchers"
+              onClick={handleOptionPress}
+            />
           </HStack>
           <HStack w="100%">
-            <OptionTab name="Loyalty Cards" />
+            <OptionTab name="Loyalty Cards" onClick={handleOptionPress} />
           </HStack>
           <HStack w="100%">
-            <OptionTab name="Logout" />
+            <OptionTab name="Logout" onClick={handleOptionPress} />
           </HStack>
         </View>
       </ScrollView>

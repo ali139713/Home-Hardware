@@ -104,7 +104,12 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
               Forgot Password
             </Text>
             <HStack justifyContent="center">
-              <Button mt="2" bg={appColor.black} w={200} onPress={handleLogin}>
+              <Button
+                mt="2"
+                bg={appColor.black}
+                backgroundColor={appColor.black}
+                w={200}
+                onPress={handleLogin}>
                 Log in
               </Button>
             </HStack>

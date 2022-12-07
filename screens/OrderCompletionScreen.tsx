@@ -9,7 +9,7 @@ import {Screens} from '../helpers/ScreenConstant';
 
 const OrderCompletionScreen: React.FC<any> = ({navigation}) => {
   const handleBackToHome = () => {
-    navigation.dispatch(StackActions.replace(Screens.HomeNavigation));
+    navigation.dispatch(StackActions.replace(Screens.Bottom));
   };
 
   return (
@@ -25,6 +25,7 @@ const OrderCompletionScreen: React.FC<any> = ({navigation}) => {
           mt="10"
           mb="10"
           bg={appColor.black}
+          backgroundColor={appColor.black}
           w="60%"
           onPress={handleBackToHome}>
           Back To Home
