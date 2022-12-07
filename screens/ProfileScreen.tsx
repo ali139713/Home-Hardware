@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: appColor.white,
   },
   image: {
-    height: HEIGHT(120),
+    height: HEIGHT(150),
     width: WIDTH(120),
     borderRadius: 60,
     marginBottom: HEIGHT(50),
