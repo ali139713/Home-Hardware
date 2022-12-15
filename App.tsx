@@ -20,13 +20,13 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {FACEBOOK_APP_ID, RN_GOOGLE_WEB_CLIENT_ID} from './config/url';
 
 const App = () => {
-  // useEffect(() => {
-  //   Settings.setAppID(FACEBOOK_APP_ID);
-  //   Settings.initializeSDK();
-  //   GoogleSignin.configure({
-  //     webClientId: RN_GOOGLE_WEB_CLIENT_ID,
-  //   });
-  // }, []);
+  useEffect(() => {
+    // Settings.setAppID(FACEBOOK_APP_ID);
+    Settings.initializeSDK();
+    GoogleSignin.configure({
+      webClientId: RN_GOOGLE_WEB_CLIENT_ID,
+    });
+  }, []);
 
   return (
     <NativeBaseProvider>

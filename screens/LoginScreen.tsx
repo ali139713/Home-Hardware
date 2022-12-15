@@ -14,6 +14,7 @@ import React, {useState} from 'react';
 import {Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
+import { googleSignIn } from '../auth/googleSignIn';
 import {SocialLoginButton} from '../components/SocialLoginButton';
 import IconComponent from './../components/IconComponent';
 import {HEIGHT, WIDTH} from './../helpers/helperFunction';
@@ -24,6 +25,15 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
 
   const handleLogin = () => {
     navigation.dispatch(StackActions.replace(Screens.Bottom));
+  };
+  const handleFacebookLogin = () => {
+
+  };
+  const handleGoogleLogin = async() => {
+    const isSignedIn =  await googleSignIn();
+    if(isSignedIn){
+      navigation.dispatch(StackActions.replace(Screens.Bottom));
+    }
   };
 
   const handleNavigateToSignUp = () => {
@@ -130,6 +140,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   name="facebook"
                   backgroundColor="#3b5998"
                   buttonText="Login with facebook"
+                  onPress={handleFacebookLogin}
                 />
               </HStack>
               <HStack mt="6" justifyContent="center">
@@ -137,6 +148,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   name="google"
                   backgroundColor="red"
                   buttonText="Login with google"
+                  onPress={handleGoogleLogin}
                 />
               </HStack>
             </HStack>
