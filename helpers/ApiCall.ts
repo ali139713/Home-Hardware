@@ -1,9 +1,9 @@
 import {apiSvc} from '../config/api.service';
 
-export const fetchAllPatient = async () => {
-  const response = await apiSvc.get('Auth/all-patients');
+export const fetchAllProducts = async (page: number) => {
+  const response = await apiSvc.get(`products?page=${page}`);
   if (response.ok) {
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } else {
     return null;

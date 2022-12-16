@@ -3,5 +3,8 @@ import {API_URL} from './url';
 
 export const apiSvc = create({
   baseURL: API_URL,
-  headers: {Accept: 'application/json'},
+  headers: {
+    authorization:
+      'Basic Y2tfYTk0NWI2OGEzZDlkMzRlNGFiMzJmMzA0MDE2MjRmY2ZhMDg3ZmI2Yzpjc19kMGQ0NzYxZTMwZjdmOWRhMjlmOWM3YzkwY2VmMzM5YjAyNDBmZWZl',
+  },
 });
