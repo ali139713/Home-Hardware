@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StackActions} from '@react-navigation/native';
 import {
   Box,
@@ -11,27 +12,29 @@ import {
   VStack,
 } from 'native-base';
 import React, {useState} from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
-import { googleSignIn } from '../auth/googleSignIn';
+import {googleSignIn} from '../auth/googleSignIn';
+// import {signInWithEmailAndPassword} from '../auth/signInWithEmailAndPassword';
 import {SocialLoginButton} from '../components/SocialLoginButton';
+import {height, width} from '../helpers/Constant';
 import IconComponent from './../components/IconComponent';
 import {HEIGHT, WIDTH} from './../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
 const LoginScreen: React.FC<any> = ({navigation}) => {
-  const [show, setShow] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleLogin = () => {
+    // signInWithEmailAndPassword(email, password);
     navigation.dispatch(StackActions.replace(Screens.Bottom));
   };
-  const handleFacebookLogin = () => {
-
-  };
-  const handleGoogleLogin = async() => {
-    const isSignedIn =  await googleSignIn();
-    if(isSignedIn){
+  const handleFacebookLogin = () => {};
+  const handleGoogleLogin = async () => {
+    const isSignedIn = await googleSignIn();
+    if (isSignedIn) {
       navigation.dispatch(StackActions.replace(Screens.Bottom));
     }
   };
@@ -41,7 +44,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={styles.container}>
       <Center w="100%" backgroundColor={appColor.white}>
         <Box safeArea p="2" py="10" w="100%" maxW="290" height="100%">
           <Image
@@ -76,6 +79,8 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
+                value={email}
+                onChangeText={setEmail}
                 InputLeftElement={
                   <IconComponent
                     name="user"
@@ -91,7 +96,9 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
-                type={show ? 'text' : 'password'}
+                value={password}
+                onChangeText={setPassword}
+                type="password"
                 InputLeftElement={
                   <IconComponent
                     name="lock"
@@ -172,3 +179,11 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
 };
 
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    height: height,
+    width: width,
+    backgroundColor: appColor.white,
+  },
+});

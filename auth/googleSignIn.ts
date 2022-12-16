@@ -1,9 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import {storeEmail, storeUsername} from '../storage/Storage';
-import {
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {notifyToast} from '../toast/toast';
 
 export const googleSignIn = async () => {
@@ -15,10 +12,10 @@ export const googleSignIn = async () => {
     // setLoginUsername(userInfo.user.name);
     // userInfo.user.email;
     await storeEmail(userInfo.user.email);
-    await storeUsername(userInfo.user.name);
-    const credential = auth.GoogleAuthProvider.credential(
-      userInfo.idToken,
-    );
+    if (userInfo.user.name) {
+      await storeUsername(userInfo.user.name);
+    }
+    const credential = auth.GoogleAuthProvider.credential(userInfo.idToken);
     const authInfo = await auth().signInWithCredential(credential);
     const token = await authInfo.user.getIdToken();
     console.log('Firebase Token', token);
