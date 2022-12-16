@@ -1,5 +1,6 @@
 import React from 'react';
 import VectorIcon from 'react-native-vector-icons/FontAwesome';
+VectorIcon.loadFont();
 
 type IconProps = {
   name: string;
