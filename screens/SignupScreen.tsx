@@ -1,35 +1,40 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Box,
   Button,
   Center,
-  FormControl,
   Heading,
   HStack,
   Input,
-  Link,
   Stack,
   Text,
   VStack,
 } from 'native-base';
 import React, {useState} from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
+import {createUser} from '../auth/signUpWithEmailAndPassword';
 import IconComponent from '../components/IconComponent';
+import {height, width} from '../helpers/Constant';
 import {WIDTH} from '../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
 const SignupScreen: React.FC<any> = ({navigation}) => {
-  const [show, setShow] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleSignUp = () => {};
+  const handleSignUp = () => {
+    createUser(email, password);
+  };
 
   const handleNavigateToLogin = () => {
     navigation.navigate(Screens.Login);
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={styles.container}>
       <Center w="100%" backgroundColor={appColor.white}>
         <Box safeArea p="2" py="10" w="100%" maxW="290" height="100%">
           <Image
@@ -64,6 +69,8 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
+                value={userName}
+                onChangeText={setUserName}
                 InputLeftElement={
                   <IconComponent
                     name="user"
@@ -79,6 +86,10 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
+                value={email}
+                onChangeText={setEmail}
+                autoComplete="off"
+                autoCapitalize="none"
                 InputLeftElement={
                   <IconComponent
                     name="envelope"
@@ -94,7 +105,9 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
                   base: '75%',
                   md: '25%',
                 }}
-                type={show ? 'text' : 'password'}
+                value={password}
+                onChangeText={setPassword}
+                type="password"
                 InputLeftElement={
                   <IconComponent
                     name="lock"
@@ -136,3 +149,11 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
 };
 
 export default SignupScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    height: height,
+    width: width,
+    backgroundColor: appColor.white,
+  },
+});
