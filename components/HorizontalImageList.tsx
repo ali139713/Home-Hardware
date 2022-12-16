@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -20,17 +21,25 @@ const BORDER_RADIUS = 20;
 type HorizontalImageListPros = {
   data: any;
   isProductDetails?: boolean;
+  handleSetPage?: () => void;
+  moreLoading?: boolean;
 };
 
 const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
   data,
   isProductDetails,
+  handleSetPage,
+  moreLoading,
 }) => {
+  const renderFooter = () => {
+    return <View>{moreLoading && <ActivityIndicator />}</View>;
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({item, index}) => {
+        renderItem={({item}) => {
           return (
             <View style={{width: ITEM_LENGTH}}>
               <View style={styles.itemContent}>
@@ -42,7 +51,10 @@ const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
                     style={styles.favouriteIcon}
                   />
                 )}
-                <Image source={data[index]} style={styles.itemImage} />
+                <Image
+                  source={{uri: item.images[0].src}}
+                  style={styles.itemImage}
+                />
                 {isProductDetails && (
                   <Text style={styles.nameText}> Wooden Sofa</Text>
                 )}
@@ -55,7 +67,10 @@ const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
         }}
         horizontal
         showsHorizontalScrollIndicator={false}
-        //   keyExtractor={item => item.id}
+        ListFooterComponent={renderFooter}
+        keyExtractor={item => item.id}
+        onEndReachedThreshold={0.2}
+        onEndReached={handleSetPage}
       />
     </View>
   );

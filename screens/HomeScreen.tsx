@@ -1,21 +1,54 @@
 import {Text, View} from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
-import {height, width} from '../helpers/Constant';
+import {Loader} from '../components/Loader';
+import {fetchAllProducts} from '../helpers/ApiCall';
+import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import HorizontalImageList from './../components/HorizontalImageList';
 import {Screens} from './../helpers/ScreenConstant';
 
 const HomeScreen: React.FC<any> = ({navigation}) => {
-  const images = [
-    require('../assets/onBoardingImage1.png'),
-    require('../assets/onBoardingImage2.png'),
-    require('../assets/onBoardingImage3.png'),
-  ];
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [moreLoading, setMoreLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+
+  // const images = [
+  //   require('../assets/onBoardingImage1.png'),
+  //   require('../assets/onBoardingImage2.png'),
+  //   require('../assets/onBoardingImage3.png'),
+  // ];
+
+  useEffect(() => {
+    async function getProducts() {
+      setLoading(true);
+
+      const responseOfProducts: any = await fetchAllProducts(page);
+      const filteredProducts = responseOfProducts.filter(
+        (product: any) => product.images.length > 0,
+      );
+      if (filteredProducts.length === 0) {
+        setPage(prev => prev + 1);
+      }
+      setProducts(filteredProducts);
+
+      setLoading(false);
+      console.log('responseOfProducts', responseOfProducts.length);
+      console.log('filteredProducts', filteredProducts.length);
+    }
+    getProducts();
+  }, [page]);
 
   const handleViewAllClick = () => {
     navigation.navigate(Screens.Categories, {isMainCategory: true});
+  };
+
+  const handleSetPage = () => {
+    setMoreLoading(true);
+    setPage(prev => prev + 1);
+    setMoreLoading(false);
   };
 
   return (
@@ -24,7 +57,11 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
         <View style={styles.container}>
           <Text style={styles.heading}>Discover</Text>
           <View style={styles.carouselContainer}>
-            <HorizontalImageList data={images} />
+            <HorizontalImageList
+              data={products}
+              handleSetPage={handleSetPage}
+              moreLoading={moreLoading}
+            />
           </View>
           <View style={styles.categoryTextContainer}>
             <Text style={styles.subHeading}>Categories</Text>
@@ -33,7 +70,11 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.categoryListContainer}>
-            <HorizontalImageList data={images} />
+            <HorizontalImageList
+              data={products}
+              handleSetPage={handleSetPage}
+              moreLoading={moreLoading}
+            />
           </View>
           <View style={styles.bestSellingTextContainer}>
             <Text style={styles.subHeading}>Best Selling</Text>
@@ -42,7 +83,11 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.bestSellingListContainer}>
-            <HorizontalImageList data={images} />
+            <HorizontalImageList
+              data={products}
+              handleSetPage={handleSetPage}
+              moreLoading={moreLoading}
+            />
           </View>
           <View style={styles.adContainer}>
             <Image
@@ -51,6 +96,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             />
           </View>
         </View>
+        {loading && <Loader />}
       </ScrollView>
     </SafeAreaView>
   );

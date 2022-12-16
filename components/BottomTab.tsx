@@ -13,6 +13,8 @@ import FavouriteScreen from './../screens/FavouritesScreen';
 import CartNavigation from './../navigation/CartNavigation';
 import ProfileNavigation from '../navigation/ProfileNavigation';
 
+VectorIcon.loadFont();
+
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (

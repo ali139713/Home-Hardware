@@ -17,7 +17,8 @@ import {RootSiblingParent} from 'react-native-root-siblings';
 import MainNavigation from './navigation/MainNavigation';
 import {Settings} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {FACEBOOK_APP_ID, RN_GOOGLE_WEB_CLIENT_ID} from './config/url';
+import {RN_GOOGLE_WEB_CLIENT_ID} from './config/url';
+import {appColor} from './assets/colors';
 
 const App = () => {
   useEffect(() => {
@@ -32,7 +33,7 @@ const App = () => {
     <NativeBaseProvider>
       <RootSiblingParent>
         <NavigationContainer>
-          <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+          <StatusBar backgroundColor={appColor.white} barStyle="default" />
           <MainNavigation />
         </NavigationContainer>
       </RootSiblingParent>
