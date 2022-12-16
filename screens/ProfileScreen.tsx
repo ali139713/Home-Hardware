@@ -1,12 +1,13 @@
+/* eslint-disable no-fallthrough */
 import {Button, HStack, Text, View, VStack} from 'native-base';
 import React from 'react';
 import {Image, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import OptionTab from '../components/OptionTab';
-import {height, width} from '../helpers/Constant';
+import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
-import {StackActions} from '@react-navigation/native';
 import {Screens} from './../helpers/ScreenConstant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen: React.FC<any> = ({navigation}) => {
   const handleEditProfile = () => {};
@@ -14,6 +15,7 @@ const ProfileScreen: React.FC<any> = ({navigation}) => {
   const handleOptionPress = (optionName: string) => {
     switch (optionName) {
       case 'Logout':
+        AsyncStorage.clear();
         navigation.navigate(Screens.Login);
       default:
         return;
