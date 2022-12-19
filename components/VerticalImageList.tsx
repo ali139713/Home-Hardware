@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Dimensions,
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -11,24 +11,37 @@ import {appColor} from '../assets/colors';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import IconComponent from './IconComponent';
 
-const {width} = Dimensions.get('window');
-
 type VerticalImageListPros = {
   data: any;
   isCategories: boolean;
   handleItemPress?: () => any;
+  fetchMoreData?: () => any;
 };
 
 const VerticalImageList: React.FC<VerticalImageListPros> = ({
   data,
   isCategories,
   handleItemPress,
+  fetchMoreData,
 }) => {
+  const renderFooter = () => {
+    return <ActivityIndicator color={appColor.primary} />;
+  };
+
+  const renderEmpty = () => {
+    return (
+      <View>
+        <Text>No more results to show</Text>
+      </View>
+    );
+  };
+
   return (
     <View>
       <FlatList
         data={data}
         numColumns={2}
+        keyExtractor={item => item}
         nestedScrollEnabled
         renderItem={({item, index}) => {
           return (
@@ -54,7 +67,10 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
             </>
           );
         }}
-        keyExtractor={item => item}
+        ListFooterComponent={renderFooter}
+        ListEmptyComponent={renderEmpty}
+        onEndReachedThreshold={0.1}
+        onEndReached={fetchMoreData}
       />
     </View>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StackActions} from '@react-navigation/native';
 import {View} from 'native-base';
 import React, {useEffect} from 'react';

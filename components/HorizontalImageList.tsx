@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
-  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -21,56 +20,68 @@ const BORDER_RADIUS = 20;
 type HorizontalImageListPros = {
   data: any;
   isProductDetails?: boolean;
-  handleSetPage?: () => void;
-  moreLoading?: boolean;
+  isCategories?: boolean;
 };
 
 const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
   data,
   isProductDetails,
-  handleSetPage,
-  moreLoading,
+  isCategories,
 }) => {
-  const renderFooter = () => {
-    return <View>{moreLoading && <ActivityIndicator />}</View>;
-  };
+  const renderItem = useCallback(
+    ({item}: any) => {
+      return (
+        <View style={{width: ITEM_LENGTH}}>
+          <View style={styles.itemContent}>
+            {isProductDetails && (
+              <IconComponent
+                name="heart"
+                size={20}
+                color={isProductDetails ? appColor.red : appColor.white}
+                style={styles.favouriteIcon}
+              />
+            )}
+            {!isCategories && (
+              <Image
+                source={
+                  item.images !== null && item?.images[0]
+                    ? {uri: item.images[0].src}
+                    : require('../assets/placeholder.jpeg')
+                }
+                style={styles.itemImage}
+              />
+            )}
+            {isCategories && (
+              <Image
+                source={
+                  item.image !== null
+                    ? {uri: item.image[0].src}
+                    : require('../assets/placeholder.jpeg')
+                }
+                style={styles.itemImage}
+              />
+            )}
+
+            {isProductDetails && (
+              <Text style={styles.nameText}> Wooden Sofa</Text>
+            )}
+            {isProductDetails && <Text style={styles.priceText}>2000$</Text>}
+          </View>
+        </View>
+      );
+    },
+    [isProductDetails, isCategories],
+  );
 
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({item}) => {
-          return (
-            <View style={{width: ITEM_LENGTH}}>
-              <View style={styles.itemContent}>
-                {isProductDetails && (
-                  <IconComponent
-                    name="heart"
-                    size={20}
-                    color={isProductDetails ? appColor.red : appColor.white}
-                    style={styles.favouriteIcon}
-                  />
-                )}
-                <Image
-                  source={{uri: item.images[0].src}}
-                  style={styles.itemImage}
-                />
-                {isProductDetails && (
-                  <Text style={styles.nameText}> Wooden Sofa</Text>
-                )}
-                {isProductDetails && (
-                  <Text style={styles.priceText}>2000$</Text>
-                )}
-              </View>
-            </View>
-          );
-        }}
+        renderItem={renderItem}
+        removeClippedSubviews
         horizontal
         showsHorizontalScrollIndicator={false}
-        ListFooterComponent={renderFooter}
         keyExtractor={item => item.id}
-        onEndReachedThreshold={0.2}
-        onEndReached={handleSetPage}
       />
     </View>
   );
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     width: '100%',
-    height: ITEM_LENGTH,
+    height: ITEM_LENGTH * 0.7,
     borderRadius: BORDER_RADIUS,
     resizeMode: 'cover',
   },

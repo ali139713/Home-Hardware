@@ -1,11 +1,11 @@
-import {Center, Text, View} from 'native-base';
+import {Text, View} from 'native-base';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import {CustomTabView} from '../components/CustomTabView';
 import Navbar from '../components/Navbar';
 import VerticalImageList from '../components/VerticalImageList';
-import {height, width} from '../helpers/Constant';
+import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
@@ -19,23 +19,27 @@ const CategoriesScreen: React.FC<any> = ({navigation, route}) => {
   ];
 
   const handleItemPress = () => {
-    navigation.navigate(Screens.ProductDetail);
+    if (isMainCategory) {
+      navigation.navigate(Screens.Categories, {isMainCategory: false});
+    } else {
+      navigation.navigate(Screens.ProductDetail);
+    }
   };
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <Navbar />
-        <Text style={styles.heading}>Furniture</Text>
+        <Text style={styles.heading}>
+          {isMainCategory ? 'Categories' : 'Furniture'}
+        </Text>
         {!isMainCategory && <CustomTabView />}
 
-        {isMainCategory && (
-          <VerticalImageList
-            data={images}
-            isCategories={false}
-            handleItemPress={handleItemPress}
-          />
-        )}
+        <VerticalImageList
+          data={images}
+          isCategories={isMainCategory ? false : true}
+          handleItemPress={handleItemPress}
+        />
       </View>
     </SafeAreaView>
   );
