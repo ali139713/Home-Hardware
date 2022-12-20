@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {appColor} from '../assets/colors';
-import {FONT, WIDTH} from '../helpers/helperFunction';
+import {FONT, HEIGHT, truncateText, WIDTH} from '../helpers/helperFunction';
 import IconComponent from './IconComponent';
 
 const {width} = Dimensions.get('window');
@@ -61,11 +61,15 @@ const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
                 style={styles.itemImage}
               />
             )}
-
-            {isProductDetails && (
-              <Text style={styles.nameText}> Wooden Sofa</Text>
-            )}
-            {isProductDetails && <Text style={styles.priceText}>2000$</Text>}
+             {isProductDetails && (
+              <View style={styles.productDetailContainer}>
+                  <Text style={styles.nameText}>{truncateText(item.name , 20)}</Text>
+                  <Text style={styles.priceText}>{item.price ? `${item.price}` + '$' : 'N/A'}</Text>
+              </View>
+           )}
+         
+          
+            
           </View>
         </View>
       );
@@ -93,26 +97,29 @@ const styles = StyleSheet.create({
   container: {},
   itemContent: {
     marginHorizontal: SPACING * 3,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     backgroundColor: 'white',
-    borderRadius: BORDER_RADIUS + SPACING * 2,
+    paddingTop: 5,
+    // borderRadius: BORDER_RADIUS + SPACING * 2,
   },
   itemImage: {
-    width: '100%',
-    height: ITEM_LENGTH * 0.7,
+    width: '50%',
+    height: '80%',
     borderRadius: BORDER_RADIUS,
     resizeMode: 'cover',
   },
+  productDetailContainer:{
+    alignItems:'flex-start'
+  },
   nameText: {
-    fontSize: FONT(16),
+    fontSize: FONT(14),
     fontWeight: '600',
     color: appColor.black,
   },
   priceText: {
-    fontSize: FONT(14),
+    fontSize: FONT(13),
     fontWeight: '500',
     color: appColor.gray,
-    marginLeft: WIDTH(5),
   },
   favouriteIcon: {
     position: 'absolute',

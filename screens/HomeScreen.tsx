@@ -74,7 +74,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.bestSellingListContainer}>
-            <HorizontalImageList data={products} />
+            <HorizontalImageList data={products} isProductDetails />
           </View>
           <View style={styles.adContainer}>
             <Image
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   carouselContainer: {
-    height: HEIGHT(250),
+    height: HEIGHT(200),
     width: '95%',
     marginTop: HEIGHT(20),
     marginLeft: WIDTH(10),
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginLeft: WIDTH(10),
   },
   bestSellingListContainer: {
-    height: HEIGHT(150),
+    height: HEIGHT(250),
     width: '95%',
     marginTop: HEIGHT(20),
     marginLeft: WIDTH(10),
