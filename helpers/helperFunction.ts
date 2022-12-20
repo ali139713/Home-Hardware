@@ -63,3 +63,7 @@ export const WIDTH = (w: number) => {
 export const FONT = (f: number) => {
   return f / windowsFontScale;
 };
+
+export const truncateText = (text:string , n:number) => {
+  return (text.length > n) ? text.slice(0, n-1) + '...' : text;
+}
