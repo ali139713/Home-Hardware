@@ -15,7 +15,7 @@ const images = [
 
 const FirstRoute = () => (
   <View style={styles.listContainer}>
-    <VerticalImageList data={images} isCategories={false} />
+    {/* <VerticalImageList data={images} isCategories={false} /> */}
   </View>
 );
 

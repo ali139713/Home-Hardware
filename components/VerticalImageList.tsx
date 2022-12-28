@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,81 +8,115 @@ import {
   View,
 } from 'react-native';
 import {appColor} from '../assets/colors';
-import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
+import {FONT, HEIGHT, truncateText, WIDTH} from '../helpers/helperFunction';
 import IconComponent from './IconComponent';
 
 type VerticalImageListPros = {
   data: any;
   isCategories: boolean;
-  handleItemPress?: () => any;
+  dataFinished?: boolean;
+  moreLoading?: boolean;
+  handleItemPress: (item: any) => any;
   fetchMoreData?: () => any;
 };
 
 const VerticalImageList: React.FC<VerticalImageListPros> = ({
   data,
   isCategories,
+  dataFinished,
+  moreLoading,
   handleItemPress,
   fetchMoreData,
 }) => {
   const renderFooter = () => {
-    return <ActivityIndicator color={appColor.primary} />;
+    return <>{moreLoading && <ActivityIndicator color={appColor.primary} />}</>;
   };
 
   const renderEmpty = () => {
     return (
-      <View>
-        <Text>No more results to show</Text>
+      <View style={styles.emptyListContainer}>
+        {dataFinished && (
+          <Text style={styles.emptyText}>No more results to show</Text>
+        )}
       </View>
     );
   };
+
+  const renderItem = useCallback(
+    ({item}: any) => {
+      return (
+        <>
+          {!moreLoading && (
+            <View
+              style={styles.itemContent}
+              onTouchStart={() => handleItemPress(item)}>
+              {isCategories && (
+                <IconComponent
+                  name="heart"
+                  size={20}
+                  color={isCategories ? appColor.red : appColor.white}
+                  style={styles.favouriteIcon}
+                />
+              )}
+              <Image
+                style={{height: HEIGHT(150), width: WIDTH(180)}}
+                // source={
+                //   item?.image !== null
+                //     ? {uri: item?.image[0].src}
+                //     : require('../assets/placeholder.jpeg')
+                // }
+                source={require('../assets/placeholder.jpeg')}
+              />
+
+              {isCategories && (
+                <View style={styles.productDetailContainer}>
+                  <Text style={styles.nameText}>
+                    {truncateText(item.name, 20)}
+                  </Text>
+                  <Text style={styles.priceText}>
+                    {item.price ? `${item.price}` + '$' : 'N/A'}
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </>
+      );
+    },
+    [moreLoading, isCategories],
+  );
 
   return (
     <View>
       <FlatList
         data={data}
         numColumns={2}
-        keyExtractor={item => item}
-        nestedScrollEnabled
-        renderItem={({item, index}) => {
-          return (
-            <>
-              <View style={styles.itemContent} onTouchStart={handleItemPress}>
-                {isCategories && (
-                  <IconComponent
-                    name="heart"
-                    size={20}
-                    color={isCategories ? appColor.red : appColor.white}
-                    style={styles.favouriteIcon}
-                  />
-                )}
-                <Image
-                  style={{height: HEIGHT(250), width: WIDTH(200)}}
-                  source={require('../assets/onBoardingImage1.png')}
-                />
-                {isCategories && (
-                  <Text style={styles.nameText}> Wooden Sofa</Text>
-                )}
-                {isCategories && <Text style={styles.priceText}>2000$</Text>}
-              </View>
-            </>
-          );
-        }}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.2}
         onEndReached={fetchMoreData}
       />
     </View>
   );
 };
 
-export default VerticalImageList;
+export default React.memo(VerticalImageList);
 
 const styles = StyleSheet.create({
   itemContent: {
     position: 'relative',
-    marginVertical: HEIGHT(15),
     alignItems: 'flex-start',
+    marginVertical: HEIGHT(15),
+  },
+  productDetailContainer: {
+    justifyContent:'center',
+    alignItems: 'flex-start',
+  },
+  emptyListContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nameText: {
     fontSize: FONT(16),
@@ -94,6 +128,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: appColor.gray,
     marginLeft: WIDTH(5),
+  },
+  emptyText: {
+    fontSize: FONT(18),
+    fontWeight: '600',
+    marginTop: '60%',
+    color: appColor.black,
   },
   favouriteIcon: {
     position: 'absolute',

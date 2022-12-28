@@ -19,13 +19,13 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
     const responseOfProducts: any = await fetchAllProducts();
     setProducts(responseOfProducts);
     setLoading(false);
-    console.log('responseOfProducts', responseOfProducts.length);
+    // console.log('responseOfProducts', responseOfProducts.length);
   };
 
   const getCategories = async () => {
     setLoading(true);
     const responseOfCategories: any = await fetchAllProductCategories();
-    console.log('responseOfCategories', responseOfCategories.length);
+    // console.log('responseOfCategories', responseOfCategories.length);
     setCategories(responseOfCategories);
     setLoading(false);
   };

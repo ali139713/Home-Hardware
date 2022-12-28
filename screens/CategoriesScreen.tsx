@@ -1,51 +1,103 @@
 import {Text, View} from 'native-base';
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import {CustomTabView} from '../components/CustomTabView';
 import Navbar from '../components/Navbar';
 import VerticalImageList from '../components/VerticalImageList';
+import {fetchAllProductCategories, fetchCategoryById} from '../helpers/ApiCall';
 import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
 const CategoriesScreen: React.FC<any> = ({navigation, route}) => {
-  const {isMainCategory} = route.params;
+  const {isMainCategory, isSubCategory, showTabView, categoryId} = route.params;
 
-  const images = [
-    require('../assets/onBoardingImage1.png'),
-    require('../assets/onBoardingImage2.png'),
-    require('../assets/onBoardingImage3.png'),
-  ];
+  const [data, setData] = useState<any[]>([]);
+  const [moreLoading, setMoreLoading] = useState<boolean>(false);
+  const [dataFinished, setDataFinished] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
 
-  const handleItemPress = () => {
+  const getCategories = async () => {
+    setMoreLoading(true);
+    const responseOfCategories: any = await fetchAllProductCategories(page);
+    console.log('responseOfCategories', responseOfCategories.length);
+    if (responseOfCategories.length === 0) {
+      setMoreLoading(false);
+      setDataFinished(true);
+      return;
+    }
+    setData(responseOfCategories);
+    setMoreLoading(false);
+  };
+
+  const getCategoryById = async () => {
+    setMoreLoading(true);
+    const responseOfCategoryById: any = await fetchCategoryById(categoryId);
+    console.log('responseOfCategoryById', responseOfCategoryById);
+    if (responseOfCategoryById.length === 0) {
+      setMoreLoading(false);
+      setDataFinished(true);
+      return;
+    }
+    setData(responseOfCategoryById);
+    setMoreLoading(false);
+  };
+
+  useEffect(() => {
     if (isMainCategory) {
-      navigation.navigate(Screens.Categories, {isMainCategory: false});
+      getCategories();
+    }
+    if (isSubCategory) {
+      getCategoryById();
+    }
+  }, [isMainCategory,isSubCategory]);
+
+  const handleFetchMoreData = () => {
+    if (!moreLoading && !dataFinished) {
+      console.log('inside fetch more');
+      setPage(prev => prev + 1);
+      getCategories();
+    }
+  };
+
+  const handleItemPress = (item: any) => {
+    console.log('item :', item);
+    if (isMainCategory) {
+      console.log('inside main category')
+      navigation.navigate(Screens.Categories, {
+        isSubCategory: true,
+        categoryId: item.id,
+      });
     } else {
-      navigation.navigate(Screens.ProductDetail);
+      navigation.navigate(Screens.ProductDetail, {productId: item.id});
     }
   };
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Navbar />
+        <Navbar handlePress={() => navigation.goBack()} />
         <Text style={styles.heading}>
           {isMainCategory ? 'Categories' : 'Furniture'}
         </Text>
-        {!isMainCategory && <CustomTabView />}
-
-        <VerticalImageList
-          data={images}
-          isCategories={isMainCategory ? false : true}
-          handleItemPress={handleItemPress}
-        />
+        {showTabView && <CustomTabView />}
+        <View style={styles.listContainer}>
+          <VerticalImageList
+            data={data}
+            isCategories={isMainCategory ? false : true}
+            dataFinished={dataFinished}
+            moreLoading={moreLoading}
+            fetchMoreData={handleFetchMoreData}
+            handleItemPress={handleItemPress}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default CategoriesScreen;
+export default React.memo(CategoriesScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -54,6 +106,14 @@ const styles = StyleSheet.create({
     backgroundColor: appColor.white,
   },
 
+  listContainer: {
+    height: '80%',
+    width: '95%',
+    marginTop: HEIGHT(20),
+    // marginLeft:WIDTH(10),
+    marginBottom: 20,
+    padding: 10,
+  },
   heading: {
     fontSize: FONT(20),
     fontWeight: '800',

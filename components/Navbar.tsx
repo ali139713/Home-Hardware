@@ -10,6 +10,7 @@ type NavbarProps = {
   headerText?: string;
   isHideIcons?: boolean;
   rightMargin?: number;
+  handlePress?:() => void;
 };
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -17,9 +18,10 @@ const Navbar: React.FC<NavbarProps> = ({
   headerText,
   isHideIcons,
   rightMargin,
+  handlePress
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onTouchStart={handlePress}>
       <View style={styles.arrowIconContainer}>
         <IconComponent name="arrow-left" size={25} color={appColor.black} />
       </View>

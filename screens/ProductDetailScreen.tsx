@@ -1,6 +1,6 @@
 import {StackActions} from '@react-navigation/native';
 import {Button, Divider, HStack} from 'native-base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -14,33 +14,48 @@ import Counter from '../components/Counter';
 import HorizontalImageList from '../components/HorizontalImageList';
 import IconComponent from '../components/IconComponent';
 import Navbar from '../components/Navbar';
+import { fetchProductById } from '../helpers/ApiCall';
 import {width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import ColorAvatars from './../components/ColorAvatars';
 import {Screens} from './../helpers/ScreenConstant';
 
-const ProductDetailScreen = ({navigation}: any) => {
+const ProductDetailScreen = ({navigation , route}: any) => {
+
+  const { productId } = route.params;
+
   const images = [
     require('../assets/onBoardingImage1.png'),
     require('../assets/onBoardingImage2.png'),
     require('../assets/onBoardingImage3.png'),
   ];
 
+  const fetchData = async () => {
+    const responseOfProductById = await fetchProductById(productId)
+    console.log({responseOfProductById})
+  }
+
+  useEffect(() => {
+     fetchData()
+  },[])
+
   const handleAddToCart = () => {
     navigation.navigate(Screens.CartNavigation);
   };
+
+
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar isFavouriteIcon={true} headerText="Room Sofa" />
+          <Navbar isFavouriteIcon={true} headerText="Room Sofa" handlePress={() => navigation.pop()} />
           <Image
             style={styles.imageStyles}
             source={require('../assets/onBoardingImage3.png')}
           />
           <View style={styles.listContainer}>
-            <HorizontalImageList data={images} />
+            {/* <HorizontalImageList data={images} /> */}
           </View>
           <View style={styles.categoryNameAndColorContainer}>
             <View>
@@ -90,7 +105,7 @@ const ProductDetailScreen = ({navigation}: any) => {
           <Divider my="10" w="90%" ml={5} color={appColor.lightGray} />
           <Text style={styles.heading}>You Might Also Like</Text>
           <View style={styles.relevantProductsListContainer}>
-            <HorizontalImageList data={images} isProductDetails />
+            {/* <HorizontalImageList data={images} isProductDetails /> */}
           </View>
         </View>
       </ScrollView>

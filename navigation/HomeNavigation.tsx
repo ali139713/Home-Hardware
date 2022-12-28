@@ -17,6 +17,12 @@ const HomeNavigation = () => {
       <Stack.Screen
         name={Screens.Categories}
         component={CategoriesScreen}
+        initialParams={{
+          isMainCategory: false,
+          isSubCategory: false,
+          showTabView: false,
+          categoryId: 0,
+        }}
         options={{headerShown: false}}
       />
       <Stack.Screen
