@@ -17,7 +17,7 @@ import {RootSiblingParent} from 'react-native-root-siblings';
 import MainNavigation from './navigation/MainNavigation';
 import {Settings} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {RN_GOOGLE_WEB_CLIENT_ID} from './config/Url';
+import {RN_GOOGLE_WEB_CLIENT_ID} from './config/url';
 import {appColor} from './assets/colors';
 
 const App = () => {

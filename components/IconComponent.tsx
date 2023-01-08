@@ -7,11 +7,24 @@ type IconProps = {
   size: number;
   color: string;
   style?: object;
+  onClick?: any;
 };
 
-const IconComponent: React.FC<IconProps> = ({name, size, color, style}) => {
+const IconComponent: React.FC<IconProps> = ({
+  name,
+  size,
+  color,
+  style,
+  onClick,
+}) => {
   return (
-    <VectorIcon name={name} size={size} color={color} style={style && style} />
+    <VectorIcon
+      onPress={onClick}
+      name={name}
+      size={size}
+      color={color}
+      style={style && style}
+    />
   );
 };
 
