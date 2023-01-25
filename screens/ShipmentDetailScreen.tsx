@@ -1,14 +1,19 @@
 import {HStack, Text, View, VStack, Button} from 'native-base';
-import React from 'react';
+import React, { useContext } from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {appColor} from '../assets/colors';
 import Navbar from '../components/Navbar';
+import OrderContext from '../context/OrderContext';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import IconComponent from './../components/IconComponent';
 import {Screens} from './../helpers/ScreenConstant';
 
 const ShipmentDetailScreen: React.FC<any> = ({navigation}) => {
+
+
+  const {cartItems, totalAmount} = useContext(OrderContext);
+
   const handleConfirm = () => {
     navigation.navigate(Screens.DeliveryDetail);
   };
@@ -48,8 +53,8 @@ const ShipmentDetailScreen: React.FC<any> = ({navigation}) => {
               <Text style={styles.graySubHeading}>:</Text>
             </VStack>
             <VStack alignItems="center" w={150} justifyContent="space-evenly">
-              <Text style={styles.graySubHeading}>08</Text>
-              <Text style={styles.graySubHeading}>$4000</Text>
+              <Text style={styles.graySubHeading}>{cartItems.length}</Text>
+              <Text style={styles.graySubHeading}>${totalAmount}</Text>
               <Text style={styles.graySubHeading}>$100</Text>
             </VStack>
           </View>
@@ -59,7 +64,7 @@ const ShipmentDetailScreen: React.FC<any> = ({navigation}) => {
             style={styles.totalAmountContainer}>
             <Text style={styles.blackSubHeading}>Total Amount</Text>
             <Text style={styles.blackSubHeading}>:</Text>
-            <Text style={styles.blackSubHeading}>$1000 </Text>
+            <Text style={styles.blackSubHeading}>${totalAmount + 100}</Text>
           </HStack>
           <HStack justifyContent="center">
             <Button
