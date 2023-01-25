@@ -1,7 +1,9 @@
+import { StackActions } from '@react-navigation/native';
 import {Button, Divider, HStack, Text, View, VStack} from 'native-base';
-import React from 'react';
+import React, { useContext } from 'react';
 import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {appColor} from '../assets/colors';
+import OrderContext from '../context/OrderContext';
 import {height, width} from '../helpers/Constant';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import Navbar from './../components/Navbar';
@@ -9,36 +11,43 @@ import ProductList from './../components/ProductsList';
 import {Screens} from './../helpers/ScreenConstant';
 
 const CartDetailScreen: React.FC<any> = ({navigation}) => {
-  const data = [
-    {
-      id: 1,
-      name: 'Arm Chair Set',
-      price: '$5000',
-    },
-    {
-      id: 2,
-      name: 'Sofa Set',
-      price: '$2000',
-    },
-    {
-      id: 3,
-      name: 'Arm Chair Set',
-      price: '$5000',
-    },
-  ];
 
+  const {cartItems, addItemToCart, removeItemFromCart, totalAmount} = useContext(OrderContext);
+
+  console.log({cartItems})
   const handleCheckout = () => {
     navigation.navigate(Screens.ShipmentDetail);
+  };
+
+  const handleAddToCart = (item:any) => {
+    addItemToCart({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      price: parseInt(item.price),
+      quantity:item.quantity,
+    });
+  };
+  const handleRemoveFromCart = (itemId:number) => {
+    removeItemFromCart(itemId);
+  };
+
+  const handleCounterPress = (type: string, item:any) => {
+    if (type === 'plus') {
+      handleAddToCart(item)
+    } else {
+      handleRemoveFromCart(item.id)
+    }
   };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar />
+          <Navbar  handlePress={() =>  navigation.dispatch(StackActions.replace(Screens.HomeNavigation))}/>
           <Text style={styles.heading}>Cart Details</Text>
           <View style={styles.productListContainer}>
-            <ProductList data={data} />
+            <ProductList data={cartItems} handleCounterPress={handleCounterPress} />
           </View>
           <View style={styles.checkoutDetailsContainer}>
             <VStack
@@ -56,18 +65,19 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
               <Text style={styles.graySubHeading}>:</Text>
             </VStack>
             <VStack alignItems="center" w={150} justifyContent="space-evenly">
-              <Text style={styles.graySubHeading}>$5000</Text>
+              <Text style={styles.graySubHeading}>${totalAmount}</Text>
               <Text style={styles.graySubHeading}>Standard - Free</Text>
-              <Text style={styles.graySubHeading}>$5000 + Tax</Text>
+              <Text style={styles.graySubHeading}>${totalAmount} + Tax</Text>
             </VStack>
           </View>
           <HStack
-            w={420}
-            justifyContent="space-between"
+            // w={420}
+            justifyContent="space-around"
+            // pr={12}
             style={styles.totalAmountContainer}>
             <Text style={styles.blackSubHeading}>Total Amount</Text>
             <Text style={styles.blackSubHeading}>:</Text>
-            <Text style={styles.blackSubHeading}>$1000 </Text>
+            <Text style={styles.blackSubHeading}>${totalAmount} </Text>
           </HStack>
           <HStack justifyContent="center">
             <Button
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: appColor.white,
   },
   productListContainer: {
-    height: HEIGHT(350),
+    height: HEIGHT(200),
     width: '95%',
     marginTop: HEIGHT(20),
     marginLeft: WIDTH(10),
