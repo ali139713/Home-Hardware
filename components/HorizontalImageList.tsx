@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     // borderRadius: BORDER_RADIUS + SPACING * 2,
   },
   itemImage: {
-    width: '50%',
+    width: '60%',
     height: '80%',
     borderRadius: BORDER_RADIUS,
     resizeMode: 'cover',
