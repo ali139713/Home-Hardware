@@ -5,7 +5,8 @@ import {appColor} from '../assets/colors';
 import {Loader} from '../components/Loader';
 import {fetchAllProductCategories, fetchAllProducts} from '../helpers/ApiCall';
 import {width} from '../helpers/Constant';
-import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
+import {FONT, HEIGHT, WIDTH, wrapperForAllSettledPromises} from '../helpers/helperFunction';
+import { notifyToast } from '../toast/toast';
 import HorizontalImageList from './../components/HorizontalImageList';
 import {Screens} from './../helpers/ScreenConstant';
 
@@ -14,35 +15,48 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getProducts = async () => {
-    setLoading(true);
-    const responseOfProducts: any = await fetchAllProducts();
-    setProducts(responseOfProducts);
-    setLoading(false);
-    // console.log('responseOfProducts', responseOfProducts.length);
+  const getProducts =  () => {
+    const responseOfProducts: any =  fetchAllProducts();
+    return responseOfProducts
   };
 
-  const getCategories = async () => {
-    setLoading(true);
-    const responseOfCategories: any = await fetchAllProductCategories();
-    // console.log('responseOfCategories', responseOfCategories.length);
-    setCategories(responseOfCategories);
-    setLoading(false);
+  const getCategories =  () => {
+    const responseOfCategories: any =  fetchAllProductCategories();
+    return responseOfCategories
   };
 
   useEffect(() => {
     async function fetchData() {
-      getProducts();
-      getCategories();
+      setLoading(true)
+      const [products, categories] = await wrapperForAllSettledPromises([
+       getProducts(),
+      getCategories()
+      ]);
+      if(products.status === 'rejected'){
+        notifyToast('Failed to fetch products')
+      }
+      if(categories.status === 'rejected'){
+        notifyToast('Failed to fetch categories');
+      }
+      
+      if(products.status === 'fulfilled'){
+        setProducts(products.value)
+      }
+      if(categories.status === 'fulfilled'){
+        setCategories(categories.value)
+      }
+      setLoading(false)
     }
     fetchData();
   }, []);
 
+ 
+
   const handleViewAllClick = (type: string) => {
     if (type === 'Categories') {
-      navigation.navigate(Screens.Categories, {isMainCategory: true});
+      navigation.navigate(Screens.Categories);
     } else {
-      navigation.navigate(Screens.Categories, {isMainCategory: false});
+      // navigation.navigate(Screens.Categories, {isMainCategory: false});
     }
   };
 
