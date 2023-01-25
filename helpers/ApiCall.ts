@@ -26,8 +26,24 @@ export const fetchAllProductCategories = async (page?: number) => {
     return null;
   }
 };
-export const fetchCategoryById = async (categoryId: number) => {
-  const response = await apiSvc.get(`products/categories/${categoryId}`);
+export const fetchCategoryProductsById = async (categoryId: number, page?:number) => {
+  const response = await apiSvc.get(`products?categoryId=${categoryId}&page=${page ? page : 1}`);
+  if (response.ok) {
+    return response.data;
+  } else {
+    return null;
+  }
+};
+export const fetchShippingZones = async () => {
+  const response = await apiSvc.get('shipping/zones');
+  if (response.ok) {
+    return response.data;
+  } else {
+    return null;
+  }
+};
+export const fetchPaymentMethods = async () => {
+  const response = await apiSvc.get('payment_gateways');
   if (response.ok) {
     return response.data;
   } else {
