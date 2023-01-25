@@ -7,9 +7,11 @@ import IconComponent from './IconComponent';
 type CounterProps = {
   flexDirection?: any;
   iconSize?: number;
+  count:number;
+  handleCounterPress?:any;
 };
 
-const Counter = ({flexDirection, iconSize}: CounterProps) => {
+const Counter = ({flexDirection, iconSize, count, handleCounterPress}: CounterProps) => {
   return (
     <HStack
       flexDirection={flexDirection ? flexDirection : 'row'}
@@ -19,12 +21,14 @@ const Counter = ({flexDirection, iconSize}: CounterProps) => {
         name="plus"
         size={iconSize ? iconSize : 25}
         color={appColor.black}
+        handlePress={() => handleCounterPress('plus')}
       />
-      <Text>01</Text>
+      <Text>{count}</Text>
       <IconComponent
         name="minus"
         size={iconSize ? iconSize : 25}
         color={appColor.black}
+        handlePress={() => handleCounterPress('minus')}
       />
     </HStack>
   );
