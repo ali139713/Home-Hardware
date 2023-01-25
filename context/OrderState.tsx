@@ -12,6 +12,8 @@ const OrderState = (props:any) => {
 
   const [state, dispatch] = useReducer(OrderReducer, initialState);
 
+  console.log(state.cartItems)
+
   const addItemToCart = (item:any) => {
     dispatch({type:ADD_CART_ITEM, payload:item})
   }
@@ -28,6 +30,7 @@ const OrderState = (props:any) => {
       value={{
         cartItems: state.cartItems,
         deliveryDetails: state.deliveryDetails,
+        totalAmount:state.totalAmount,
         addItemToCart,
         removeItemFromCart,
         saveDeliveryDetails
