@@ -60,12 +60,13 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
               )}
               <Image
                 style={{height: HEIGHT(150), width: WIDTH(180)}}
+               
                 // source={
-                //   item?.image !== null
-                //     ? {uri: item?.image[0].src}
+                //   item?.images !== null
+                //     ? {uri: item?.images[0].src}
                 //     : require('../assets/placeholder.jpeg')
                 // }
-                source={require('../assets/placeholder.jpeg')}
+                source={isCategories ? {uri: item?.images[0]?.src} : require('../assets/placeholder.jpeg')}
               />
 
               {isCategories && (
