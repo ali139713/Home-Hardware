@@ -10,6 +10,7 @@ export const Screens = {
   Profile: 'ProfileScreen',
   Bottom: 'BottomTab',
   Categories: 'CategoriesScreen',
+  CategoryProducts: 'CategoryProductsScreen',
   ProductDetail: 'ProductDetailScreen',
   CartDetail: 'CartDetailScreen',
   ShipmentDetail: 'ShipmentDetailScreen',
