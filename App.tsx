@@ -19,6 +19,8 @@ import {Settings} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {RN_GOOGLE_WEB_CLIENT_ID} from './config/Url';
 import {appColor} from './assets/colors';
+import OrderContext from './context/OrderContext';
+import OrderState from './context/OrderState';
 
 const App = () => {
   useEffect(() => {
@@ -30,6 +32,7 @@ const App = () => {
   }, []);
 
   return (
+    <OrderState>
     <NativeBaseProvider>
       <RootSiblingParent>
         <NavigationContainer>
@@ -38,6 +41,7 @@ const App = () => {
         </NavigationContainer>
       </RootSiblingParent>
     </NativeBaseProvider>
+    </OrderState>
   );
 };
 
