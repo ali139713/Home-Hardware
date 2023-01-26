@@ -60,13 +60,24 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
     }
   };
 
+  const handleNavigateToProductDetailScreen = (item:any) => {
+    navigation.navigate(Screens.ProductDetail, {productId: item.id});
+  }
+
+  const handleNavigateToCategoryProductsScreen = (item:any) => {
+    navigation.navigate(Screens.CategoryProducts, {
+      categoryId: item.id,
+      categoryName:item.name
+    });
+  }
+
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.heading}>Discover</Text>
           <View style={styles.carouselContainer}>
-            <HorizontalImageList data={products} />
+            <HorizontalImageList data={products} handlePress={handleNavigateToProductDetailScreen} />
           </View>
           <View style={styles.categoryTextContainer}>
             <Text style={styles.subHeading}>Categories</Text>
@@ -77,7 +88,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.categoryListContainer}>
-            <HorizontalImageList data={categories} isCategories />
+            <HorizontalImageList data={categories} handlePress={handleNavigateToCategoryProductsScreen} isCategories />
           </View>
           <View style={styles.bestSellingTextContainer}>
             <Text style={styles.subHeading}>Best Selling</Text>
@@ -88,7 +99,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.bestSellingListContainer}>
-            <HorizontalImageList data={products} isProductDetails />
+            <HorizontalImageList data={products} handlePress={handleNavigateToProductDetailScreen} isProductDetails />
           </View>
           <View style={styles.adContainer}>
             <Image
