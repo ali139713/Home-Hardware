@@ -120,19 +120,17 @@ const ProductDetailScreen = ({navigation, route}: any) => {
     );
   }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return  (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
           <Navbar
             isFavouriteIcon={true}
             headerText={
-              productData?.name?.split(' ')[0] +
+             !loading ? productData?.name?.split(' ')[0] +
               ' ' +
-              productData?.name?.split(' ')[1]
-            }
+              productData?.name?.split(' ')[1] : ''}
+            
             handlePress={() => navigation.pop()}
           />
           <Image
@@ -208,6 +206,7 @@ const ProductDetailScreen = ({navigation, route}: any) => {
           </View>
         </View>
       </ScrollView>
+      {loading && <Loader />}
     </SafeAreaView>
   );
 };
