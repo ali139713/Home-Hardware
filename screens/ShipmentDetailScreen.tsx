@@ -22,7 +22,7 @@ const ShipmentDetailScreen: React.FC<any> = ({navigation}) => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar />
+          <Navbar handlePress={() => navigation.goBack()}/>
           <Text style={styles.heading}>Shipment Details</Text>
           <View style={styles.deliveryAddressContainer}>
             <View style={styles.deliveryTextContainer}>
