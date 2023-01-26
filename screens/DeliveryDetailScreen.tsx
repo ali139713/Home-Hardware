@@ -10,12 +10,16 @@ import {
   Text,
   View,
 } from 'native-base';
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, ScrollView, NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {appColor} from '../assets/colors';
 import IconComponent from '../components/IconComponent';
+import { Loader } from '../components/Loader';
+import OrderContext from '../context/OrderContext';
+import {createOrder, fetchPaymentMethods, fetchShippingZones} from '../helpers/ApiCall';
 import {height, width} from '../helpers/Constant';
-import {WIDTH} from '../helpers/helperFunction';
+import {WIDTH, wrapperForAllSettledPromises} from '../helpers/helperFunction';
+import {notifyToast} from '../toast/toast';
 import Navbar from './../components/Navbar';
 import {Screens} from './../helpers/ScreenConstant';
 
@@ -26,28 +30,14 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
     value: string;
   };
 
-  const countries: SelectType[] = [
-    {
-      id: 1,
-      label: 'Pakistan',
-      value: 'Pakistan',
-    },
-    {
-      id: 2,
-      label: 'USA',
-      value: 'USA',
-    },
-    {
-      id: 3,
-      label: 'England',
-      value: 'England',
-    },
-    {
-      id: 4,
-      label: 'China',
-      value: 'China',
-    },
-  ];
+  interface IShipmentDetail {
+    fullName:string;
+    phoneNo:string;
+    address:string;
+    city:string;
+    province:string;
+    zipCode:string;
+  }
 
   const provinces: SelectType[] = [
     {
@@ -72,12 +62,130 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
     },
   ];
 
+  const { cartItems } = useContext(OrderContext)
+
+  const [countries, setCountries] = useState<SelectType[]>([]);
+  const [methods, setMethods] = useState<any>([]);
   const [country, setCountry] = useState<string>('');
   const [province, setProvince] = useState<string>('');
   const [isDefaultAddress, setIsDefaultAddress] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [shipmentDetails, setShipmentDetails] = useState<IShipmentDetail>({
+    fullName:'',
+    phoneNo:'',
+    address:'',
+    city:'',
+    province:'',
+    zipCode:''
+  });
+
+  const getCountries = () => {
+    const countriesResponse = fetchShippingZones();
+    return countriesResponse;
+  };
+  const getPaymentMethod = () => {
+    const paymentMethodResponse = fetchPaymentMethods();
+    return paymentMethodResponse;
+  };
+
+  const saveOrder = async (orderToCreate:any) => {
+    setLoading(true)
+    const responseOfSaveOrder = await createOrder(orderToCreate)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const [countries, methods] = await wrapperForAllSettledPromises([
+        getCountries(),
+        getPaymentMethod(),
+      ]);
+      if (countries.status === 'rejected') {
+        notifyToast('Failed to fetch countries');
+      }
+      if (methods.status === 'rejected') {
+        notifyToast('Failed to fetch methods');
+      }
+
+      if (countries.status === 'fulfilled') {
+        const filteredCountry:any = countries.value
+          .filter((country: any) => country.name === 'Pakistan')
+          .map((x: any) => ({id: x.id, label: x.name, value: x.name}));
+        console.log({filteredCountry});
+        setCountries(filteredCountry);
+      }
+      if (methods.status === 'fulfilled') {
+        const filteredMethod = methods.value.filter(
+          (method: any) => method.id === 'cod',
+        );
+        console.log({filteredMethod});
+        setMethods(filteredMethod);
+      }
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  const handleChange = (e:NativeSyntheticEvent<TextInputChangeEventData>, name:string) => {
+    setShipmentDetails(prev => {
+      const x= {...prev}
+      return {
+        ...x,
+        name:e.nativeEvent.text
+      }
+    })
+  }
 
   const handleSave = () => {
-    navigation.navigate(Screens.OrderCompletion);
+
+    const lineItems = cartItems.map((item:any) => {
+      return {
+        product_id:item.id,
+        quantity:item.quantity
+      }
+    })
+    const data = {
+      payment_method: methods[0].id,
+      payment_method_title: methods[0].title,
+      set_paid: false,
+      // billing: {
+      //   first_name: "John",
+      //   last_name: "Doe",
+      //   address_1: "969 Market",
+      //   address_2: "",
+      //   city: "San Francisco",
+      //   state: "CA",
+      //   postcode: "94103",
+      //   country: "US",
+      //   email: "john.doe@example.com",
+      //   phone: "(555) 555-5555"
+      // },
+      shipping: {
+        first_name: shipmentDetails.fullName,
+        last_name: shipmentDetails.fullName,
+        address_1: shipmentDetails.address,
+        address_2: shipmentDetails.address,
+        city: shipmentDetails.city,
+        state: province,
+        postcode: shipmentDetails.zipCode,
+        country: country,
+      },
+      line_items: lineItems,
+      // shipping_lines: [
+      //   {
+      //     method_id: "flat_rate",
+      //     method_title: "Flat Rate",
+      //     total: "10.00"
+      //   }
+      // ]
+    };
+
+    console.log({data})
+
+    saveOrder(data);
+
+    // navigation.navigate(Screens.OrderCompletion);
   };
 
   return (
@@ -141,6 +249,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                   isRequired
                   variant="underlined"
                   focusOutlineColor={appColor.lightGray}
+                  onChange={(e) => handleChange(e,'fullName')}
                 />
               </FormControl>
             </Box>
@@ -153,6 +262,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                   isRequired
                   variant="underlined"
                   focusOutlineColor={appColor.lightGray}
+                  onChange={(e) => handleChange(e,'phoneNo')}
                 />
               </FormControl>
             </Box>
@@ -165,6 +275,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                   isRequired
                   variant="underlined"
                   focusOutlineColor={appColor.lightGray}
+                  onChange={(e) => handleChange(e,'address')}
                 />
               </FormControl>
             </Box>
@@ -177,6 +288,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                   isRequired
                   variant="underlined"
                   focusOutlineColor={appColor.lightGray}
+                  onChange={(e) => handleChange(e,'city')}
                 />
               </FormControl>
             </Box>
@@ -224,6 +336,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                     isRequired
                     variant="underlined"
                     focusOutlineColor={appColor.lightGray}
+                    onChange={(e) => handleChange(e,'zipCode')}
                   />
                 </FormControl>
               </Box>
@@ -245,13 +358,14 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                 bg={appColor.black}
                 backgroundColor={appColor.black}
                 w="90%"
-                onPress={handleSave}>
+                onPress={() =>handleSave()}>
                 Save & Continue
               </Button>
             </HStack>
           </Stack>
         </View>
       </ScrollView>
+      {loading && <Loader />}
     </SafeAreaView>
   );
 };
