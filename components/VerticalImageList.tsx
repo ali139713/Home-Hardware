@@ -1,14 +1,15 @@
-import React, {useCallback} from 'react';
+import { Pressable } from 'native-base';
+import React, { useCallback } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
-import {appColor} from '../assets/colors';
-import {FONT, HEIGHT, truncateText, WIDTH} from '../helpers/helperFunction';
+import { appColor } from '../assets/colors';
+import { FONT, HEIGHT, truncateText, WIDTH } from '../helpers/helperFunction';
 import IconComponent from './IconComponent';
 
 type VerticalImageListPros = {
@@ -47,9 +48,9 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
       return (
         <>
           {!moreLoading && (
-            <View
+            <Pressable
               style={styles.itemContent}
-              onTouchStart={() => handleItemPress(item)}>
+              onPress={() => handleItemPress(item)}>
               {isCategories && (
                 <IconComponent
                   name="heart"
@@ -59,7 +60,7 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
                 />
               )}
               <Image
-                style={{height: HEIGHT(150), width: WIDTH(180)}}
+                style={{height: HEIGHT(140), width: WIDTH(160)}}
                
                 // source={
                 //   item?.images !== null
@@ -79,7 +80,7 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
                   </Text>
                 </View>
               )}
-            </View>
+            </Pressable>
           )}
         </>
       );
@@ -91,6 +92,7 @@ const VerticalImageList: React.FC<VerticalImageListPros> = ({
     <View>
       <FlatList
         data={data}
+        showsVerticalScrollIndicator={false}
         numColumns={2}
         keyExtractor={item => item.id}
         renderItem={renderItem}
@@ -109,7 +111,9 @@ const styles = StyleSheet.create({
   itemContent: {
     position: 'relative',
     alignItems: 'flex-start',
+    marginHorizontal:WIDTH(10),
     marginVertical: HEIGHT(15),
+    // backgroundColor:'red'
   },
   productDetailContainer: {
     justifyContent:'center',

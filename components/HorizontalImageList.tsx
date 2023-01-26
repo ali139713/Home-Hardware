@@ -1,3 +1,4 @@
+import { Pressable } from 'native-base';
 import React, {useCallback} from 'react';
 import {
   Dimensions,
@@ -5,6 +6,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {appColor} from '../assets/colors';
@@ -21,17 +23,19 @@ type HorizontalImageListPros = {
   data: any;
   isProductDetails?: boolean;
   isCategories?: boolean;
+  handlePress?: (item:any) => void;
 };
 
 const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
   data,
   isProductDetails,
   isCategories,
+  handlePress
 }) => {
   const renderItem = useCallback(
     ({item}: any) => {
       return (
-        <View style={{width: ITEM_LENGTH}}>
+        <Pressable style={{width: ITEM_LENGTH}} onPress={() => handlePress!(item)}>
           <View style={styles.itemContent}>
             {isProductDetails && (
               <IconComponent
@@ -42,14 +46,14 @@ const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
               />
             )}
             {!isCategories && (
-              <Image
-                source={
-                  item.images !== null && item?.images[0]
-                    ? {uri: item.images[0].src}
-                    : require('../assets/placeholder.jpeg')
-                }
-                style={styles.itemImage}
-              />
+                 <Image
+                    source={
+                      item.images !== null && item?.images[0]
+                        ? {uri: item.images[0].src}
+                        : require('../assets/placeholder.jpeg')
+                    }
+                    style={styles.itemImage}
+                  />
             )}
             {isCategories && (
               <Image
@@ -71,7 +75,7 @@ const HorizontalImageList: React.FC<HorizontalImageListPros> = ({
           
             
           </View>
-        </View>
+        </Pressable>
       );
     },
     [isProductDetails, isCategories],
