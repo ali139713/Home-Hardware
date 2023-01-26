@@ -21,6 +21,7 @@ const ProductList: React.FC<ProductListProps> = ({data,handleCounterPress}) => {
         renderItem={({item}) => {
           return (
             <View style={styles.container}>
+            
               <View style={styles.imageContainer}>
                 <Image
                   style={styles.imageStyle}
@@ -48,6 +49,7 @@ const ProductList: React.FC<ProductListProps> = ({data,handleCounterPress}) => {
             </View>
           );
         }}
+        ListEmptyComponent={<Text style={styles.emptyCart}>Cart Is Empty</Text>}
         keyExtractor={item => item.id}
       />
     </View>
@@ -91,5 +93,12 @@ const styles = StyleSheet.create({
     fontSize: FONT(14),
     fontWeight: '800',
     color: appColor.black,
+  },
+  emptyCart: {
+    fontSize: FONT(18),
+    fontWeight: '800',
+    color: appColor.black,
+    marginTop:HEIGHT(50),
+    alignSelf:'center'
   },
 });
