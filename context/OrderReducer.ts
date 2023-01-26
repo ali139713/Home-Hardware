@@ -6,19 +6,21 @@ export default (state:any, action:any) => {
 
   switch (type) {
     case ADD_CART_ITEM:
-      let updatedCartItems =[...state.cartItems];
-      if(updatedCartItems.length === 0){
-        updatedCartItems.push(payload)
+      const updatedCartItems = [...state.cartItems];
+      const updatedItemIndex = updatedCartItems.findIndex(
+        item => item.id === payload.id
+      );
+    
+      if (updatedItemIndex < 0) {
+        updatedCartItems.push(payload);
+      } else {
+        const updatedItem = {
+          ...updatedCartItems[updatedItemIndex]
+        };
+        updatedItem.quantity++;
+        updatedCartItems[updatedItemIndex] = updatedItem;
       }
-      else{
-        updatedCartItems =  updatedCartItems.map((item:any) => {
-          if(item.id === payload.id){
-            item.quantity++;
-            return item
-          }
-          return payload;
-        } )
-      }
+      console.log({updatedCartItems})
       const totalAmount = updatedCartItems.reduce((acc:any,current:any) => acc + current.price * current.quantity,0)
       return {
         ...state,
@@ -26,20 +28,22 @@ export default (state:any, action:any) => {
         totalAmount:totalAmount
       };
     case REMOVE_CART_ITEM:
-      let filteredCartItems =[...state.cartItems];
-      filteredCartItems =  state.cartItems.map((item:any) => {
-        if(item.id === payload){
-          item.quantity--;
-          return item
-        }
-        return item;
-      } ).filter((x:any) => x.quantity > 0 );
-        const newAmount = filteredCartItems.reduce((acc:any,current:any) => acc + current.price * current.quantity,0)
-        console.log({filteredCartItems})
-        console.log({newAmount})
+      const filteredCart = [...state.cartItems];
+      const filteredItemIndex = filteredCart.findIndex(item => item.id === payload);
+    
+      const updatedItem = {
+        ...filteredCart[filteredItemIndex]
+      };
+      updatedItem.quantity--;
+      if (updatedItem.quantity <= 0) {
+        filteredCart.splice(filteredItemIndex, 1);
+      } else {
+        filteredCart[filteredItemIndex] = updatedItem;
+      }
+      const newAmount = filteredCart.reduce((acc:any,current:any) => acc + current.price * current.quantity,0)
       return {
         ...state,
-        cartItems: filteredCartItems,
+        cartItems: filteredCart,
         totalAmount:newAmount
       };
     case SAVE_DELIVERY_DETAILS:
