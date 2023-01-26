@@ -50,3 +50,12 @@ export const fetchPaymentMethods = async () => {
     return null;
   }
 };
+export const createOrder = async (order:any) => {
+  const response = await apiSvc.post('orders', order);
+  console.log('response of create order :', response.status)
+  if (response.ok) {
+    return response.data;
+  } else {
+    return null;
+  }
+};
