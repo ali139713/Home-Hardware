@@ -1,5 +1,5 @@
 import {create} from 'apisauce';
-import {API_URL} from './url';
+import {API_URL} from './Url';
 
 export const apiSvc = create({
   baseURL: API_URL,
