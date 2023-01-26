@@ -86,9 +86,10 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
               bg={appColor.black}
               backgroundColor={appColor.black}
               w="90%"
+              isDisabled={cartItems.length === 0}
               onPress={handleCheckout}>
               Checkout
-            </Button>
+            </Button> 
           </HStack>
         </View>
       </ScrollView>
