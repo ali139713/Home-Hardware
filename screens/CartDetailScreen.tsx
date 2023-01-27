@@ -1,20 +1,21 @@
 import { StackActions } from '@react-navigation/native';
-import {Button, Divider, HStack, Text, View, VStack} from 'native-base';
+import { Button, HStack, Text, View, VStack } from 'native-base';
 import React, { useContext } from 'react';
-import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
-import {appColor} from '../assets/colors';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { appColor } from '../assets/colors';
 import OrderContext from '../context/OrderContext';
-import {height, width} from '../helpers/Constant';
-import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
+import { width } from '../helpers/Constant';
+import { FONT, HEIGHT, WIDTH } from '../helpers/helperFunction';
 import Navbar from './../components/Navbar';
 import ProductList from './../components/ProductsList';
-import {Screens} from './../helpers/ScreenConstant';
+import { Screens } from './../helpers/ScreenConstant';
 
 const CartDetailScreen: React.FC<any> = ({navigation}) => {
 
   const {cartItems, addItemToCart, removeItemFromCart, totalAmount} = useContext(OrderContext);
 
   console.log({cartItems})
+
   const handleCheckout = () => {
     navigation.navigate(Screens.ShipmentDetail);
   };
@@ -44,7 +45,9 @@ const CartDetailScreen: React.FC<any> = ({navigation}) => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar  handlePress={() =>  navigation.dispatch(StackActions.replace(Screens.HomeNavigation))}/>
+          <Navbar  handlePress={() =>  navigation.navigate(Screens.HomeNavigation,{
+            screen:Screens.Categories
+          })}/>
           <Text style={styles.heading}>Cart Details</Text>
           <View style={styles.productListContainer}>
             <ProductList data={cartItems} handleCounterPress={handleCounterPress} />
