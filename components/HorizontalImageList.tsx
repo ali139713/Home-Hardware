@@ -15,8 +15,8 @@ import IconComponent from './IconComponent';
 
 const {width} = Dimensions.get('window');
 
-const SPACING = 5;
-const ITEM_LENGTH = width * 0.8; // Item is a square. Therefore, its height and width are of the same length.
+const SPACING = 4;
+const ITEM_LENGTH = width * 0.9; // Item is a square. Therefore, its height and width are of the same length.
 const BORDER_RADIUS = 20;
 
 type HorizontalImageListPros = {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     // borderRadius: BORDER_RADIUS + SPACING * 2,
   },
   itemImage: {
-    width: '60%',
+    width: '55%',
     height: '80%',
     borderRadius: BORDER_RADIUS,
     resizeMode: 'cover',
