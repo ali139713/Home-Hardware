@@ -56,16 +56,20 @@ const ProductDetailScreen = ({navigation, route}: any) => {
   };
 
   const handleCounterPress = (type: string) => {
-    if (type === 'plus') {
-      setCount((prev: number) => prev + 1);
-    } 
     if( type === 'minus' && count === 1){
       return;
     }
+    if (type === 'plus') {
+      setCount((prev: number) => prev + 1);
+    } 
     if(type === 'minus' && count > 1){
       setCount((prev: number) => prev - 1);
     }
   };
+
+  const handleNavigateToProductDetailScreen = (item:any) => {
+    navigation.navigate(Screens.ProductDetail, {productId: item.id});
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -125,12 +129,18 @@ const ProductDetailScreen = ({navigation, route}: any) => {
       <ScrollView>
         <View style={styles.container}>
           <Navbar
-            isFavouriteIcon={true}
+            // isFavouriteIcon={true}
             headerText={
              !loading ? productData?.name?.split(' ')[0] +
               ' ' +
               productData?.name?.split(' ')[1] : ''}
-            
+              rightIcon={
+              <>
+              <IconComponent name="heart" size={25} color={appColor.black} />
+              <IconComponent name="search" size={25} color={appColor.black} />  
+              </>
+              }
+              isTwoRightIcon
             handlePress={() => navigation.pop()}
           />
           <Image
@@ -202,7 +212,7 @@ const ProductDetailScreen = ({navigation, route}: any) => {
           <Divider my="10" w="90%" ml={5} color={appColor.lightGray} />
           <Text style={styles.heading}>You Might Also Like</Text>
           <View style={styles.relevantProductsListContainer}>
-            <HorizontalImageList data={bestSelling} isProductDetails />
+            <HorizontalImageList data={bestSelling} isProductDetails handlePress={handleNavigateToProductDetailScreen} />
           </View>
         </View>
       </ScrollView>
