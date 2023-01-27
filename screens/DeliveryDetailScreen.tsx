@@ -39,6 +39,8 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
     zipCode:string;
   }
 
+
+
   const provinces: SelectType[] = [
     {
       id: 1,
@@ -61,6 +63,15 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
       value: 'Balochistan',
     },
   ];
+
+  const errorMap = {
+    fullName:'Please Enter Full Name',
+    phoneNo:'Please Enter Phone No',
+    address:'Please Enter Address',
+    city:'Please Enter City',
+    province:'Please Enter Province',
+    zipCode:'Please Enter Zip Code'
+  }
 
   const { cartItems } = useContext(OrderContext)
 
@@ -139,63 +150,111 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
 
   const handleSave = () => {
 
-    const lineItems = cartItems.map((item:any) => {
-      return {
-        product_id:item.id,
-        quantity:item.quantity
-      }
-    })
-    const data = {
-      payment_method: methods[0].id,
-      payment_method_title: methods[0].title,
-      set_paid: false,
-      // billing: {
-      //   first_name: "John",
-      //   last_name: "Doe",
-      //   address_1: "969 Market",
-      //   address_2: "",
-      //   city: "San Francisco",
-      //   state: "CA",
-      //   postcode: "94103",
-      //   country: "US",
-      //   email: "john.doe@example.com",
-      //   phone: "(555) 555-5555"
-      // },
-      shipping: {
-        first_name: shipmentDetails.fullName,
-        last_name: shipmentDetails.fullName,
-        address_1: shipmentDetails.address,
-        address_2: shipmentDetails.address,
-        city: shipmentDetails.city,
-        state: province,
-        postcode: shipmentDetails.zipCode,
-        country: country,
-      },
-      line_items: lineItems,
-      // shipping_lines: [
-      //   {
-      //     method_id: "flat_rate",
-      //     method_title: "Flat Rate",
-      //     total: "10.00"
-      //   }
-      // ]
-    };
+    const isValid = validate();
 
-    console.log({data})
+    if(isValid){
+      const lineItems = cartItems.map((item:any) => {
+        return {
+          product_id:item.id,
+          quantity:item.quantity
+        }
+      })
+      const data = {
+        payment_method: methods[0].id,
+        payment_method_title: methods[0].title,
+        set_paid: false,
+        // billing: {
+        //   first_name: "John",
+        //   last_name: "Doe",
+        //   address_1: "969 Market",
+        //   address_2: "",
+        //   city: "San Francisco",
+        //   state: "CA",
+        //   postcode: "94103",
+        //   country: "US",
+        //   email: "john.doe@example.com",
+        //   phone: "(555) 555-5555"
+        // },
+        shipping: {
+          first_name: shipmentDetails.fullName,
+          last_name: shipmentDetails.fullName,
+          address_1: shipmentDetails.address,
+          address_2: shipmentDetails.address,
+          city: shipmentDetails.city,
+          state: province,
+          postcode: shipmentDetails.zipCode,
+          country: country,
+        },
+        line_items: lineItems,
+        // shipping_lines: [
+        //   {
+        //     method_id: "flat_rate",
+        //     method_title: "Flat Rate",
+        //     total: "10.00"
+        //   }
+        // ]
+      };
+      console.log({data})
 
-    saveOrder(data);
-
-    // navigation.navigate(Screens.OrderCompletion);
+      saveOrder(data);
+      navigation.navigate(Screens.OrderCompletion);
+    }
   };
+
+  const validate = () => {
+    if(shipmentDetails.fullName === '')
+    {
+      notifyToast(errorMap.fullName)
+      return false;
+    }
+    if(shipmentDetails.phoneNo === '')
+    {
+      notifyToast(errorMap.phoneNo)
+      return false;
+    }
+    if(shipmentDetails.address === '')
+    {
+      notifyToast(errorMap.address)
+      return false;
+    }
+    if(shipmentDetails.city === '')
+    {
+      notifyToast(errorMap.city)
+      return false;
+    }
+    if(shipmentDetails.province === '')
+    {
+      notifyToast(errorMap.province)
+      return false;
+    }
+    if(shipmentDetails.zipCode === '')
+    {
+      notifyToast(errorMap.zipCode)
+      return false;
+    }
+    if(country === '')
+    {
+      notifyToast('Please Choose A Country')
+      return false;
+    }
+
+    return true;
+  }
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
           <Navbar
-            headerText="Enter Delivery Address"
-            isHideIcons
-            rightMargin={WIDTH(90)}
+            headerText="Delivery Address"
+            isTwoRightIcon
+            rightIcon={
+            <>
+            <View></View>
+            <View></View>
+            </>
+            }
+            handlePress={() => navigation.goBack()}
           />
           <Stack
             space={2.5}
@@ -358,7 +417,7 @@ const DeliveryDetailScreen: React.FC<any> = ({navigation}) => {
                 bg={appColor.black}
                 backgroundColor={appColor.black}
                 w="90%"
-                onPress={() =>handleSave()}>
+                onPress={() => handleSave()}>
                 Save & Continue
               </Button>
             </HStack>
