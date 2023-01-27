@@ -1,70 +1,53 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {FONT, HEIGHT, WIDTH} from '../helpers/helperFunction';
 import {appColor} from './../assets/colors';
 import {NavigationProp} from '@react-navigation/native';
 import IconComponent from './IconComponent';
 import FilterModal from './FilterModal';
+import { HStack, View } from 'native-base';
 
 type NavbarProps = {
-  isFavouriteIcon?: boolean;
   headerText?: string;
-  isHideIcons?: boolean;
-  rightMargin?: number;
+  rightIcon?: JSX.Element;
+  isTwoRightIcon?:boolean;
   handlePress?: () => void;
 };
 
+
 const Navbar: React.FC<NavbarProps> = ({
-  isFavouriteIcon,
   headerText,
-  isHideIcons,
-  rightMargin,
+  rightIcon,
+  isTwoRightIcon,
   handlePress,
 }) => {
   const [showFilter, setShowFilter] = useState<boolean>(false);
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.arrowIconContainer} onTouchStart={handlePress}>
-          <IconComponent name="arrow-left" size={25} color={appColor.black} />
-        </View>
+    <HStack px={3} style={styles.appHeader}>
+   <IconComponent name="arrow-left" size={25} color={appColor.black} handlePress={handlePress} />
+   {
+    isTwoRightIcon ?  
+    (
+      <View ml={12}>    
+      <Text
+         style={styles.headerTextWithMargin}>
+         {headerText}
+       </Text>
+       </View>
+    )    
+    :     
+     (
+     <View mr={5}>    
+         <Text
+            style={styles.headerText}>
+            {headerText}
+          </Text>
+          </View>
+     )
+   }
 
-        <View style={styles.filterAndSearchIconContainer}>
-          {headerText !== '' && (
-            <Text
-              style={{
-                fontSize: FONT(18),
-                fontWeight: '800',
-                marginRight: isHideIcons ? rightMargin : WIDTH(80),
-                color: appColor.black,
-              }}>
-              {headerText}
-            </Text>
-          )}
-          {isFavouriteIcon && !isHideIcons && (
-            <IconComponent
-              name="heart"
-              size={25}
-              color={appColor.black}
-              style={{marginRight: WIDTH(15)}}
-            />
-          )}
-          {!isFavouriteIcon && !isHideIcons && (
-            <IconComponent
-              name="filter"
-              size={25}
-              onClick={() => setShowFilter(true)}
-              color={appColor.black}
-              style={{marginRight: WIDTH(15)}}
-            />
-          )}
-          {!isHideIcons && (
-            <IconComponent name="search" size={25} color={appColor.black} />
-          )}
-        </View>
-      </View>
-      <FilterModal modalVisible={showFilter} setModalVisible={setShowFilter} />
-    </>
+    {rightIcon}
+  </HStack>
   );
 };
 
@@ -78,11 +61,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  arrowIconContainer: {
-    marginLeft: WIDTH(10),
+  appHeader: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: HEIGHT(50),
   },
-  filterAndSearchIconContainer: {
-    flexDirection: 'row',
-    marginRight: WIDTH(10),
+  headerText :{
+    fontSize: FONT(18),
+    fontWeight: '800',
+    color: appColor.black,
   },
+  headerTextWithMargin :{
+    fontSize: FONT(18),
+    fontWeight: '800',
+    color: appColor.black,
+    marginRight:WIDTH(20)
+  }
 });
