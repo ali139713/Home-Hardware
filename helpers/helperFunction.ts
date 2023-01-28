@@ -68,6 +68,11 @@ export const truncateText = (text:string , n:number) => {
   return (text.length > n) ? text.slice(0, n-1) + '...' : text;
 }
 
+export const isValidEmail = (email: string, regex: RegExp) => {
+  const isValid = regex.test(email);
+  return isValid;
+};
+
 export const wrapperForAllSettledPromises =  ((promises:any) => Promise.all(
   promises.map((p:any) => p
       .then((value:any) => ({

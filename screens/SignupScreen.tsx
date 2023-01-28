@@ -16,22 +16,55 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
 import {createUser} from '../auth/signUpWithEmailAndPassword';
 import IconComponent from '../components/IconComponent';
-import {height, width} from '../helpers/Constant';
-import {WIDTH} from '../helpers/helperFunction';
+import { Loader } from '../components/Loader';
+import {EMAIL_REGEX, height, width} from '../helpers/Constant';
+import {isValidEmail, WIDTH} from '../helpers/helperFunction';
+import { notifyToast } from '../toast/toast';
 import {Screens} from './../helpers/ScreenConstant';
 
 const SignupScreen: React.FC<any> = ({navigation}) => {
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSignUp = () => {
-    createUser(email, password);
+
+  const handleSignUp = async () => {
+   const isValid = validate();
+   if(isValid){
+     setLoading(true)
+     const isRegistered =  await createUser(email, password);
+     if(isRegistered){
+      notifyToast('Signed Up Successfully')
+      setLoading(false)
+      navigation.navigate(Screens.Login)
+     }
+     else{
+      setLoading(false)
+     }
+      };
+      setLoading(false)
   };
 
   const handleNavigateToLogin = () => {
     navigation.navigate(Screens.Login);
   };
+
+  const validate = () => {
+    if(email === ''){
+      notifyToast('Email is required')
+      return false;
+    }
+    if(password === ''){
+      notifyToast('Password is required')
+      return false;
+    }
+    if(!isValidEmail(email,EMAIL_REGEX)){
+      notifyToast('Please Enter A Valid Email')
+      return false;
+    }
+    return true;
+  }
 
   return (
     <KeyboardAwareScrollView style={styles.container}>
@@ -144,6 +177,7 @@ const SignupScreen: React.FC<any> = ({navigation}) => {
           </VStack>
         </Box>
       </Center>
+      {loading && <Loader/>}
     </KeyboardAwareScrollView>
   );
 };

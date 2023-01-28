@@ -16,21 +16,37 @@ import {Image, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {appColor} from '../assets/colors';
 import {googleSignIn} from '../auth/googleSignIn';
-// import {signInWithEmailAndPassword} from '../auth/signInWithEmailAndPassword';
+import {signInWithEmailAndPassword} from '../auth/signInWithEmailAndPassword';
+import { Loader } from '../components/Loader';
 import {SocialLoginButton} from '../components/SocialLoginButton';
-import {height, width} from '../helpers/Constant';
+import {EMAIL_REGEX, height, width} from '../helpers/Constant';
+import { notifyToast } from '../toast/toast';
 import IconComponent from './../components/IconComponent';
-import {HEIGHT, WIDTH} from './../helpers/helperFunction';
+import {HEIGHT, isValidEmail, WIDTH} from './../helpers/helperFunction';
 import {Screens} from './../helpers/ScreenConstant';
 
 const LoginScreen: React.FC<any> = ({navigation}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleLogin = () => {
-    // signInWithEmailAndPassword(email, password);
-    navigation.dispatch(StackActions.replace(Screens.Bottom));
-  };
+  const handleLogin = async () => {
+    const isValid = validate();
+    if(isValid){
+      setLoading(true)
+      const isSignedIn =  await signInWithEmailAndPassword(email, password);
+      if(isSignedIn){
+       notifyToast('Signed In Successfully')
+       setLoading(false)
+       navigation.dispatch(StackActions.replace(Screens.Bottom));
+      }
+      else{
+       setLoading(false)
+      }
+       };
+       setLoading(false)
+    }
+  
   const handleFacebookLogin = () => {};
   const handleGoogleLogin = async () => {
     const isSignedIn = await googleSignIn();
@@ -42,6 +58,22 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
   const handleNavigateToSignUp = () => {
     navigation.navigate(Screens.Signup);
   };
+
+  const validate = () => {
+    if(email === ''){
+      notifyToast('Email is required')
+      return false;
+    }
+    if(password === ''){
+      notifyToast('Password is required')
+      return false;
+    }
+    if(!isValidEmail(email,EMAIL_REGEX)){
+      notifyToast('Please Enter A Valid Email')
+      return false;
+    }
+    return true;
+  }
 
   return (
     <KeyboardAwareScrollView style={styles.container}>
@@ -126,7 +158,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
                 bg={appColor.black}
                 backgroundColor={appColor.black}
                 w={200}
-                onPress={handleLogin}>
+                onPress={() => handleLogin()}>
                 Log in
               </Button>
             </HStack>
@@ -174,6 +206,7 @@ const LoginScreen: React.FC<any> = ({navigation}) => {
           </Text>
         </Box>
       </Center>
+      {loading && <Loader />}
     </KeyboardAwareScrollView>
   );
 };
